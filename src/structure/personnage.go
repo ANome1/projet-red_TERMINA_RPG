@@ -5,20 +5,22 @@ import (
 )
 
 type Personnage struct {
-	Nom       string
-	Classe    string
-	Niveau    int
-	PvMax     int
-	PvActuels int
+	Nom        string
+	Classe     string
+	Niveau     int
+	PvMax      int
+	PvActuels  int
+	Inventaire []string
 }
 
-func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int) Personnage {
+func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string) Personnage {
 	return Personnage{
-		Nom:       nom,
-		Classe:    classe,
-		Niveau:    niveau,
-		PvMax:     pvMax,
-		PvActuels: pvActuels,
+		Nom:        nom,
+		Classe:     classe,
+		Niveau:     niveau,
+		PvMax:      pvMax,
+		PvActuels:  pvActuels,
+		Inventaire: Inventaire{Items: inventaire, Max: 10}.Items,
 	}
 }
 
