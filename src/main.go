@@ -73,14 +73,17 @@ func Menu(perso *RED.Personnage) {
 		case "1":
 			REDM.ClearTerminal()
 			RED.AddInventory(perso, "Potion de soin")
+			perso.Gold -= 3
 			Menu(perso)
 		case "2":
 			REDM.ClearTerminal()
 			RED.AddInventory(perso, "Potion de poison")
+			perso.Gold -= 6
 			Menu(perso)
 		case "3":
 			REDM.ClearTerminal()
 			RED.AddInventory(perso, "Livre de Sort : Boule de Feu")
+			perso.Gold -= 25
 			Menu(perso)
 		case "4":
 			REDM.ClearTerminal()
