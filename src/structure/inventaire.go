@@ -8,22 +8,21 @@ type Inventaire struct {
 }
 
 func InventairePotion(perso *Personnage) {
-	// Compter les potions
+	potionsDisponibles := []string{"Potion de soin", "Potion de poison"}
 	compteur := make(map[string]int)
 	for _, item := range perso.Inventaire {
-		if item == "Potion de soin" || item == "Potion de poison" {
-			compteur[item]++
-		}
+		compteur[item]++
 	}
-
-	// Affichage
 	fmt.Println("\n╔════════════════════════════════════════════╗")
 	fmt.Println("║           🎒 LISTE DES POTIONS             ║")
 	fmt.Println("╠════════════════════════════════════════════╣")
-	for potion, qte := range compteur {
+	for _, potion := range potionsDisponibles {
+		qte := compteur[potion]
 		fmt.Printf("║ • %-28s x%-3d        ║\n", potion, qte)
 	}
+	fmt.Println("║ 🔙 Retour au Menu Principal (3)            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
+	fmt.Println("👉 Votre choix :")
 }
 
 func AccessInventory(perso *Personnage) {
@@ -80,7 +79,6 @@ func RemoveInventory(perso *Personnage, item string) {
 			return
 		}
 	}
-	fmt.Println(item, "n'est pas dans l'inventaire.")
 }
 
 func InventairePlein(perso *Personnage) bool {

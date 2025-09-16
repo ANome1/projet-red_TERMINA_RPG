@@ -13,8 +13,25 @@ type Items struct {
 }
 
 func PoisonPot(perso *Personnage) {
-	fmt.Println("\n╔════════════════════════════════════════════╗")
-	fmt.Println("║ ☠️  Vous avez été empoisonné !              ║")
+	// Vérifie si le joueur a une Potion de Poison
+	aPotion := false
+	for _, item := range perso.Inventaire {
+		if item == "Potion de poison" {
+			aPotion = true
+			break
+		}
+	}
+
+	if !aPotion {
+		fmt.Println("❌ Vous n'avez pas de Potion de Poison dans votre inventaire.")
+		return
+	}
+
+	// Retire la potion avant d'appliquer l'effet
+	RemoveInventory(perso, "Potion de Poison")
+
+	fmt.Println("\n╔═════════════════════════════════════════════════╗")
+	fmt.Println("║ ☠️  Vous avez utilisé une Potion de Poison !     ║")
 	for i := 1; i <= 3; i++ {
 		time.Sleep(1 * time.Second)
 		perso.PvActuels -= 10
@@ -22,9 +39,11 @@ func PoisonPot(perso *Personnage) {
 			perso.PvActuels = 0
 		}
 		fmt.Printf("║ 💀 Dégâts empoisonnés :%-25d║\n", 10*i)
-		fmt.Printf("║ ❤️  PV actuels :%-28d║\n", perso.PvActuels)
-		fmt.Println("╚════════════════════════════════════════════╝")
+		fmt.Printf("║ ❤️  PV actuels :%-28d     ║\n", perso.PvActuels)
 	}
+	fmt.Println("╚═════════════════════════════════════════════════╝")
+
+	// Vérifie si le joueur meurt
 	if perso.PvActuels == 0 {
 		IsDead(perso)
 	}
@@ -32,14 +51,12 @@ func PoisonPot(perso *Personnage) {
 
 func TakePot(perso *Personnage) {
 	for i, v := range perso.Inventaire {
-		if v == "Potion" {
+		if v == "Potion de soin" {
 			if perso.PvActuels < perso.PvMax {
 				perso.PvActuels += 50
 				if perso.PvActuels > perso.PvMax {
 					perso.PvActuels = perso.PvMax
 				}
-
-				// Retirer la potion de l'inventaire
 				Inv := []string{}
 				for j, item := range perso.Inventaire {
 					if j != i {

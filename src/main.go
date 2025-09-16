@@ -42,7 +42,21 @@ func Menu(perso *RED.Personnage) {
 		case "2":
 			REDM.ClearTerminal()
 			RED.InventairePotion(perso)
-			Menu(perso)
+			choix5 := REDM.LireChoix()
+			switch choix5 {
+			case "1":
+				REDM.ClearTerminal()
+				RED.TakePot(perso)
+				Menu(perso)
+			case "2":
+				REDM.ClearTerminal()
+				RED.PoisonPot(perso)
+				Menu(perso)
+			case "3":
+				REDM.ClearTerminal()
+				Menu(perso)
+			}
+
 		case "3":
 			REDM.ClearTerminal()
 			RED.SpellBook(perso)
@@ -69,6 +83,7 @@ func Menu(perso *RED.Personnage) {
 			RED.AddInventory(perso, "Livre de Sort : Boule de Feu")
 			Menu(perso)
 		case "4":
+			REDM.ClearTerminal()
 			Menu(perso)
 		}
 	case "4":
