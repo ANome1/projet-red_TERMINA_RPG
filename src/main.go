@@ -71,38 +71,66 @@ func Menu(perso *RED.Personnage) {
 		switch choix2 {
 		case "1":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Potion de soin")
-			perso.Gold -= 3
+			if perso.Gold >= 3 {
+				RED.AddInventory(perso, "Potion de soin")
+				perso.Gold -= 3
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "2":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Potion de poison")
-			perso.Gold -= 6
+			if perso.Gold >= 6 {
+				RED.AddInventory(perso, "Potion de poison")
+				perso.Gold -= 6
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "3":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Livre de Sort : Boule de Feu")
-			perso.Gold -= 25
+			if perso.Gold >= 25 {
+				RED.AddInventory(perso, "Livre de Sort : Boule de Feu")
+				perso.Gold -= 25
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "4":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Fourrure de Loup")
-			perso.Gold -= 4
+			if perso.Gold >= 4 {
+				RED.AddInventory(perso, "Fourrure de Loup")
+				perso.Gold -= 4
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "5":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Peau de Troll")
-			perso.Gold -= 7
+			if perso.Gold >= 7 {
+				RED.AddInventory(perso, "Peau de Troll")
+				perso.Gold -= 7
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "6":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Cuir de Sanglier")
-			perso.Gold -= 3
+			if perso.Gold >= 3 {
+				RED.AddInventory(perso, "Cuir de Sanglier")
+				perso.Gold -= 3
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "7":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Plume de Corbeau")
-			perso.Gold -= 1
+			if perso.Gold >= 1 {
+				RED.AddInventory(perso, "Plume de Corbeau")
+				perso.Gold -= 1
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
 			Menu(perso)
 		case "8":
 			REDM.ClearTerminal()
@@ -126,10 +154,14 @@ func Menu(perso *RED.Personnage) {
 		case "1":
 			REDM.ClearTerminal()
 			if RED.HasItem(perso, "Plume de Corbeau") && RED.HasItem(perso, "Cuir de Sanglier") {
-				RED.RemoveInventory(perso, "Plume de Corbeau")
-				RED.RemoveInventory(perso, "Cuir de Sanglier")
-				RED.AddInventory(perso, "Chapeau de l'aventurier")
-				perso.Gold -= 5
+				if perso.Gold >= 5 {
+					RED.RemoveInventory(perso, "Plume de Corbeau")
+					RED.RemoveInventory(perso, "Cuir de Sanglier")
+					RED.AddInventory(perso, "Chapeau de l'aventurier")
+					perso.Gold -= 5
+				} else {
+					fmt.Println("❌ Vous n'avez pas assez d'or pour forger le Chapeau de l'aventurier.")
+				}
 			} else {
 				fmt.Println("❌ Vous n'avez pas les matériaux nécessaires pour forger le Chapeau de l'aventurier.")
 			}
@@ -138,11 +170,15 @@ func Menu(perso *RED.Personnage) {
 		case "2":
 			REDM.ClearTerminal()
 			if RED.CountItem(perso, "Fourrure de Loup") >= 2 && RED.HasItem(perso, "Peau de Troll") {
-				RED.RemoveInventory(perso, "Fourrure de Loup")
-				RED.RemoveInventory(perso, "Fourrure de Loup")
-				RED.RemoveInventory(perso, "Peau de Troll")
-				RED.AddInventory(perso, "Tunique de l'aventurier")
-				perso.Gold -= 5
+				if perso.Gold >= 5 {
+					RED.RemoveInventory(perso, "Fourrure de Loup")
+					RED.RemoveInventory(perso, "Fourrure de Loup")
+					RED.RemoveInventory(perso, "Peau de Troll")
+					RED.AddInventory(perso, "Tunique de l'aventurier")
+					perso.Gold -= 5
+				} else {
+					fmt.Println("❌ Vous n'avez pas assez d'or pour forger la Tunique de l'aventurier.")
+				}
 			} else {
 				fmt.Println("❌ Vous n'avez pas les matériaux nécessaires pour forger la Tunique de l'aventurier.")
 			}
@@ -151,10 +187,14 @@ func Menu(perso *RED.Personnage) {
 		case "3":
 			REDM.ClearTerminal()
 			if RED.HasItem(perso, "Fourrure de Loup") && RED.HasItem(perso, "Cuir de Sanglier") {
-				RED.RemoveInventory(perso, "Fourrure de Loup")
-				RED.RemoveInventory(perso, "Cuir de Sanglier")
-				RED.AddInventory(perso, "Bottes de l'aventurier")
-				perso.Gold -= 5
+				if perso.Gold >= 5 {
+					RED.RemoveInventory(perso, "Fourrure de Loup")
+					RED.RemoveInventory(perso, "Cuir de Sanglier")
+					RED.AddInventory(perso, "Bottes de l'aventurier")
+					perso.Gold -= 5
+				} else {
+					fmt.Println("❌ Vous n'avez pas assez d'or pour forger les Bottes de l'aventurier.")
+				}
 			} else {
 				fmt.Println("❌ Vous n'avez pas les matériaux nécessaires pour forger les Bottes de l'aventurier.")
 			}
@@ -164,7 +204,6 @@ func Menu(perso *RED.Personnage) {
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
-
 	case "6":
 		REDM.ClearTerminal()
 		fmt.Println("\n╔═════════════════════════════════════════════════╗")
