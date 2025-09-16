@@ -1,7 +1,8 @@
 package main
 
 import (
-	RED "RED/src/structure"
+	RED "RED/structure"
+
 	"fmt"
 )
 
