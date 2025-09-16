@@ -34,7 +34,6 @@ func TakePot(perso *Personnage) {
 				return
 			} else {
 				fmt.Println("✅ Vos PV sont déjà au maximum.")
-				return
 			}
 		}
 	}

@@ -14,16 +14,18 @@ type Personnage struct {
 	Niveau     int
 	PvMax      int
 	PvActuels  int
+	Skill      []string
 	Inventaire []string
 }
 
-func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string) Personnage {
+func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string, skill []string) Personnage {
 	return Personnage{
 		Nom:        nom,
 		Classe:     classe,
 		Niveau:     niveau,
 		PvMax:      pvMax,
 		PvActuels:  pvActuels,
+		Skill:      skill,
 		Inventaire: inventaire,
 	}
 }
@@ -33,7 +35,7 @@ func CharacterCreation() Personnage {
 
 	var nom string
 	for {
-		fmt.Print("Entrez le nom de votre personnage : ")
+		fmt.Print("🧑 Entrez le nom de votre personnage : ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
 
@@ -85,9 +87,22 @@ func CharacterCreation() Personnage {
 	}
 	pvActuels := pvMax / 2
 	inventaire := []string{}
-	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire)
+	skill := []string{"Coup de poing"}
+	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill)
 	fmt.Println("✅ Personnage créé avec succès !")
 	return personnage
+}
+func SpellBook(perso *Personnage) {
+	sort := "Boule de feu"
+	for _, s := range perso.Skill {
+		if s == sort {
+			fmt.Println("❌ Ce sort est déjà appris.")
+			return
+		}
+	}
+
+	perso.Skill = append(perso.Skill, sort)
+	fmt.Println("🔥 Vous avez appris le sort :", sort)
 }
 
 func estNomValide(nom string) bool {
@@ -116,6 +131,22 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ 📈 Niveau : %-30d ║\n", perso.Niveau)
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
+	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
+	fmt.Println("╚════════════════════════════════════════════╝")
+	fmt.Println("👉 Votre choix :")
+}
+
+func InfoSort(perso *Personnage) {
+	fmt.Println("\n╔════════════════════════════════════════════╗")
+	fmt.Println("║             📚 SORT DU JOUEUR              ║")
+	fmt.Println("╠════════════════════════════════════════════╣")
+	for _, item := range perso.Skill {
+		if len(item) > 36 {
+			item = item[:33] + "..."
+		}
+		fmt.Printf("║ • %-38s   ║\n", item)
+	}
+
 	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")

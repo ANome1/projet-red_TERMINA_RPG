@@ -33,7 +33,8 @@ func InfoInventaire() {
 	fmt.Println("╠═════════════════════════════════╣")
 	fmt.Println("║ 1. 👀 Afficher l'inventaire     ║")
 	fmt.Println("║ 2. 🧪 Utiliser une potion       ║ ")
-	fmt.Println("║ 3. 🔙 Retour au Menu Principal  ║")
+	fmt.Println("║ 3. 📚 Utiliser un livre de sort ║ ")
+	fmt.Println("║ 4. 🔙 Retour au Menu Principal  ║")
 	fmt.Println("╚═════════════════════════════════╝")
 	fmt.Print("👉 Votre choix : ")
 }
