@@ -1,5 +1,7 @@
 package RED
 
+import "fmt"
+
 type Items struct {
 	Items  []string
 	Max    int
@@ -7,18 +9,28 @@ type Items struct {
 	Valeur int
 }
 
-func TakePotion(perso *Personnage, item string) {
-	for i, it := range perso.Inventaire {
-		if it == item {
-			if item == "Potion de soin" {
+func TakePotion(perso *Personnage) {
+	for i, v := range perso.Inventaire {
+		if v == "Potion" {
+			if perso.PvActuels < perso.PvMax {
 				perso.PvActuels += 50
+				if perso.PvActuels > perso.PvMax {
+					perso.PvActuels = perso.PvMax
+				}
+				Inv := []string{}
+				for j, v := range perso.Inventaire {
+					if j != i {
+						Inv = append(Inv, v)
+					}
+				}
+				perso.Inventaire = Inv
+				fmt.Println("Vous avez utilisé une Potion. PV actuels :", perso.PvActuels)
+				return
+			} else {
+				fmt.Println("Vos PV sont déjà au maximum.")
+				return
 			}
-			if perso.PvActuels > perso.PvMax {
-				perso.PvActuels = perso.PvMax
-			}
-			// Retirer l'objet de l'inventaire
-			perso.Inventaire = append(perso.Inventaire[:i], perso.Inventaire[i+1:]...)
-			break
 		}
 	}
+	fmt.Println("Vous n'avez pas de Potion dans votre inventaire.")
 }

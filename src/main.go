@@ -1,39 +1,40 @@
 package main
 
 import (
-	RED "RED/structure"
+	REDMenu "RED/menu"
+	REDStruct "RED/structure"
 
 	"fmt"
 )
 
 func main() {
-	perso := RED.InitCharacter("Aragorn", "Ranger", 10, 100, 100, []string{"Arc", "Flèches", "Potion"})
+	perso := REDStruct.InitCharacter("Aragorn", "Ranger", 10, 100, 100, []string{"Arc", "Flèches", "Potion"})
 	Menu(&perso)
 }
 
-func Menu(perso *RED.Personnage) {
-	RED.AfficherMenu()
-	choix := RED.LireChoix()
+func Menu(perso *REDStruct.Personnage) {
+	REDMenu.AfficherMenu()
+	choix := REDMenu.LireChoix()
 
 	switch choix {
 	case "1":
-		RED.DisplayInfo(*perso)
-		choix2 := RED.LireChoix()
+		REDStruct.DisplayInfo(*perso)
+		choix2 := REDMenu.LireChoix()
 		if choix2 == "1" {
 			Menu(perso)
 		}
 	case "2":
-		RED.AccessInventory(*perso)
-		choix2 := RED.LireChoix()
+		REDStruct.AccessInventory(*perso)
+		choix2 := REDMenu.LireChoix()
 		if choix2 == "1" {
 			Menu(perso)
 		}
 	case "3":
-		RED.InterfaceMarchand()
-		choix2 := RED.LireChoix()
+		REDMenu.InterfaceMarchand()
+		choix2 := REDMenu.LireChoix()
 		switch choix2 {
 		case "1":
-			RED.AddInventory(perso, "Potion")
+			REDStruct.AddInventory(perso, "Potion")
 			Menu(perso)
 		case "2":
 			Menu(perso)
