@@ -31,7 +31,7 @@ func Menu(perso *RED.Personnage) {
 		switch choix2 {
 		case "1":
 			REDM.ClearTerminal()
-			RED.AccessInventory(*perso)
+			RED.AccessInventory(perso)
 			choix3 := REDM.LireChoix()
 			switch choix3 {
 			case "1":
@@ -39,7 +39,7 @@ func Menu(perso *RED.Personnage) {
 			}
 		case "2":
 			REDM.ClearTerminal()
-			RED.TakePot(perso)
+			RED.InventairePotion(perso)
 			Menu(perso)
 		case "3":
 			REDM.ClearTerminal()
@@ -55,13 +55,17 @@ func Menu(perso *RED.Personnage) {
 		switch choix2 {
 		case "1":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Potion")
+			RED.AddInventory(perso, "Potion de soin")
 			Menu(perso)
 		case "2":
 			REDM.ClearTerminal()
-			RED.AddInventory(perso, "Livre de Sort : Boule de Feu")
+			RED.AddInventory(perso, "Potion de poison")
 			Menu(perso)
 		case "3":
+			REDM.ClearTerminal()
+			RED.AddInventory(perso, "Livre de Sort : Boule de Feu")
+			Menu(perso)
+		case "4":
 			Menu(perso)
 		}
 	case "4":

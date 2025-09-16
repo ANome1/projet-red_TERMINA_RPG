@@ -7,7 +7,26 @@ type Inventaire struct {
 	Max   int
 }
 
-func AccessInventory(perso Personnage) {
+func InventairePotion(perso *Personnage) {
+	// Compter les potions
+	compteur := make(map[string]int)
+	for _, item := range perso.Inventaire {
+		if item == "Potion de soin" || item == "Potion de poison" {
+			compteur[item]++
+		}
+	}
+
+	// Affichage
+	fmt.Println("\n╔════════════════════════════════════════════╗")
+	fmt.Println("║           🎒 LISTE DES POTIONS             ║")
+	fmt.Println("╠════════════════════════════════════════════╣")
+	for potion, qte := range compteur {
+		fmt.Printf("║ • %-28s x%-3d        ║\n", potion, qte)
+	}
+	fmt.Println("╚════════════════════════════════════════════╝")
+}
+
+func AccessInventory(perso *Personnage) {
 	fmt.Println("\n╔════════════════════════════════════════════╗")
 	fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
 	fmt.Println("╠════════════════════════════════════════════╣")
