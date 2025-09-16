@@ -79,8 +79,28 @@ func RemoveInventory(perso *Personnage, item string) {
 			return
 		}
 	}
+	fmt.Println(item, "n'a pas été trouvé dans l'inventaire.")
 }
 
 func InventairePlein(perso *Personnage) bool {
 	return len(perso.Inventaire) >= 10
+}
+
+func HasItem(perso *Personnage, item string) bool {
+	for _, i := range perso.Inventaire {
+		if i == item {
+			return true
+		}
+	}
+	return false
+}
+
+func CountItem(perso *Personnage, item string) int {
+	count := 0
+	for _, i := range perso.Inventaire {
+		if i == item {
+			count++
+		}
+	}
+	return count
 }
