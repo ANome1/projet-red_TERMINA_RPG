@@ -22,6 +22,7 @@ func Menu(perso *RED.Personnage) {
 		choix2 := REDM.LireChoix()
 		switch choix2 {
 		case "1":
+			REDM.ClearTerminal()
 			Menu(perso)
 		}
 	case "2":
@@ -35,6 +36,7 @@ func Menu(perso *RED.Personnage) {
 			choix3 := REDM.LireChoix()
 			switch choix3 {
 			case "1":
+				REDM.ClearTerminal()
 				Menu(perso)
 			}
 		case "2":
@@ -46,6 +48,7 @@ func Menu(perso *RED.Personnage) {
 			RED.SpellBook(perso)
 			Menu(perso)
 		case "4":
+			REDM.ClearTerminal()
 			Menu(perso)
 		}
 	case "3":
@@ -74,6 +77,7 @@ func Menu(perso *RED.Personnage) {
 		choix2 := REDM.LireChoix()
 		switch choix2 {
 		case "1":
+			REDM.ClearTerminal()
 			Menu(perso)
 		}
 	case "5":
