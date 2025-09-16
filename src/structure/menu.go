@@ -6,7 +6,8 @@ func AfficherMenu() {
 	fmt.Println("\n=== MENU ===")
 	fmt.Println("1. Afficher les infos du personnage")
 	fmt.Println("2. Accéder à l'inventaire")
-	fmt.Println("3. Quitter")
+	fmt.Println("3. Interface du Marchand")
+	fmt.Println("4. Quitter")
 	fmt.Println("Votre choix : ")
 }
 
