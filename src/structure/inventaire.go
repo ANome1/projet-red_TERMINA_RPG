@@ -45,7 +45,6 @@ func AddInventory(perso *Personnage, item string) {
 	} else {
 		fmt.Println("Inventaire plein ! Impossible d'ajouter", item)
 	}
-	fmt.Println("1. Retour au Menu Principal")
 }
 
 func RemoveInventory(perso *Personnage, item string) {

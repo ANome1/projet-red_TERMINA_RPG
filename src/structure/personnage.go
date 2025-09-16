@@ -15,17 +15,19 @@ type Personnage struct {
 	Niveau     int
 	PvMax      int
 	PvActuels  int
+	Gold       int
 	Skill      []string
 	Inventaire []string
 }
 
-func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string, skill []string) Personnage {
+func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string, skill []string, gold int) Personnage {
 	return Personnage{
 		Nom:        nom,
 		Classe:     classe,
 		Niveau:     niveau,
 		PvMax:      pvMax,
 		PvActuels:  pvActuels,
+		Gold:       gold,
 		Skill:      skill,
 		Inventaire: inventaire,
 	}
@@ -86,12 +88,12 @@ func CharacterCreation() Personnage {
 	if classe == classes[2] {
 		pvMax = 120
 	}
-
+	gold := 100
 	pvActuels := pvMax / 2
 	inventaire := []string{}
 	skill := []string{"Coup de poing"}
 
-	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill)
+	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill, gold)
 
 	RED.ClearTerminal()
 	fmt.Println("\n╔════════════════════════════════════╗")
@@ -109,6 +111,21 @@ func CharacterCreation() Personnage {
 }
 
 func SpellBook(perso *Personnage) {
+	// Vérifie si le joueur a un "Livre de Sort : Boule de Feu"
+	aLeLivre := false
+	for _, item := range perso.Inventaire {
+		if item == "Livre de Sort : Boule de Feu" {
+			aLeLivre = true
+			break
+		}
+	}
+
+	if !aLeLivre {
+		fmt.Println("❌ Vous n'avez pas de 'Livre de Sort : Boule de Feu' dans votre inventaire.")
+		return
+	}
+
+	// Vérifie si le sort est déjà appris
 	sort := "Boule de feu"
 	for _, s := range perso.Skill {
 		if s == sort {
@@ -117,8 +134,19 @@ func SpellBook(perso *Personnage) {
 		}
 	}
 
+	// Apprendre le sort
 	perso.Skill = append(perso.Skill, sort)
 	fmt.Println("🔥 Vous avez appris le sort :", sort)
+
+	// Retirer le livre de l'inventaire après utilisation
+	nouvelInventaire := []string{}
+	for _, item := range perso.Inventaire {
+		if item != "Livre de Sort : Boule de Feu" {
+			nouvelInventaire = append(nouvelInventaire, item)
+		}
+	}
+	perso.Inventaire = nouvelInventaire
+	fmt.Println("📖 Le 'Livre de Sort : Boule de Feu' a été consommé.")
 }
 
 func estNomValide(nom string) bool {
@@ -147,6 +175,7 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ 📈 Niveau : %-30d ║\n", perso.Niveau)
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
+	fmt.Printf("║ 💰 Gold : %-26d       ║\n", perso.Gold)
 	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
