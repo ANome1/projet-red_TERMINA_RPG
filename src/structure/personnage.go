@@ -1,6 +1,7 @@
 package RED
 
 import (
+	RED "RED/menu"
 	"bufio"
 	"fmt"
 	"os"
@@ -85,13 +86,28 @@ func CharacterCreation() Personnage {
 	if classe == classes[2] {
 		pvMax = 120
 	}
+
 	pvActuels := pvMax / 2
 	inventaire := []string{}
 	skill := []string{"Coup de poing"}
+
 	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill)
-	fmt.Println("✅ Personnage créé avec succès !")
+
+	RED.ClearTerminal()
+	fmt.Println("\n╔════════════════════════════════════╗")
+	fmt.Println("║   🎉 PERSONNAGE CRÉÉ AVEC SUCCÈS   ║")
+	fmt.Println("╠════════════════════════════════════╣")
+	fmt.Printf("║ 🔤 Nom    : %-22s ║\n", personnage.Nom)
+	fmt.Printf("║ 🧙 Classe : %-22s ║\n", personnage.Classe)
+	fmt.Println("╚════════════════════════════════════╝")
+
+	fmt.Print("\n✨ Appuyez sur Entrée pour commencer votre aventure...")
+	reader.ReadString('\n')
+
+	RED.ClearTerminal()
 	return personnage
 }
+
 func SpellBook(perso *Personnage) {
 	sort := "Boule de feu"
 	for _, s := range perso.Skill {
@@ -138,7 +154,7 @@ func DisplayInfo(perso Personnage) {
 
 func InfoSort(perso *Personnage) {
 	fmt.Println("\n╔════════════════════════════════════════════╗")
-	fmt.Println("║             📚 SORT DU JOUEUR              ║")
+	fmt.Println("║           📚 SORT DU JOUEUR                ║")
 	fmt.Println("╠════════════════════════════════════════════╣")
 	for _, item := range perso.Skill {
 		if len(item) > 36 {

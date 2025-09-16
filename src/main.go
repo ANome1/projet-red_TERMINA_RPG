@@ -20,7 +20,8 @@ func Menu(perso *RED.Personnage) {
 		REDM.ClearTerminal()
 		RED.DisplayInfo(*perso)
 		choix2 := REDM.LireChoix()
-		if choix2 == "1" {
+		switch choix2 {
+		case "1":
 			Menu(perso)
 		}
 	case "2":
@@ -73,7 +74,9 @@ func Menu(perso *RED.Personnage) {
 		}
 	case "5":
 		REDM.ClearTerminal()
-		fmt.Println("À bientôt !")
+		fmt.Println("\n╔═════════════════════════════════════════════════╗")
+		fmt.Println("║       🎮 A bientôt ! Merci d'avoir joué !       ║")
+		fmt.Println("╚═════════════════════════════════════════════════╝")
 		return
 	default:
 		REDM.ClearTerminal()
