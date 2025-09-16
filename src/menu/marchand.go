@@ -9,7 +9,7 @@ func InterfaceMarchand() {
 	fmt.Println("║                💰 MARCHAND                 ║")
 	fmt.Println("╠════════════════════════════════════════════╣")
 	fmt.Println("║ 1. 🧪 Potion : Gratuit                     ║")
+	fmt.Println("║ 2. 🔙 Retour au Menu Principal             ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
-	fmt.Println("2. Retour au Menu Principal")
-	fmt.Println("Votre choix :")
+	fmt.Println("👉 Votre choix :")
 }

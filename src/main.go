@@ -23,9 +23,17 @@ func Menu(perso *RED.Personnage) {
 			Menu(perso)
 		}
 	case "2":
-		RED.AccessInventory(*perso)
+		RED.InfoInventaire()
 		choix2 := REDM.LireChoix()
-		if choix2 == "1" {
+		switch choix2 {
+		case "1":
+			RED.AccessInventory(*perso)
+			choix3 := REDM.LireChoix()
+			switch choix3 {
+			case "1":
+				Menu(perso)
+			}
+		case "3":
 			Menu(perso)
 		}
 	case "3":

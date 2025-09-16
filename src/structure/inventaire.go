@@ -22,11 +22,21 @@ func AccessInventory(perso Personnage) {
 			fmt.Printf("║ • %-38s   ║\n", item)
 		}
 	}
-
+	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
-	fmt.Println("1. 🔙 Retour au Menu Principal")
+	fmt.Println("👉 Votre choix :")
 }
 
+func InfoInventaire() {
+	fmt.Println("\n╔═════════════════════════════════╗")
+	fmt.Println("║     INFORMATIONS INVENTAIRE     ║")
+	fmt.Println("╠═════════════════════════════════╣")
+	fmt.Println("║ 1. 👀 Afficher l'inventaire     ║")
+	fmt.Println("║ 2. 🧪 Utiliser une potion       ║ ")
+	fmt.Println("║ 3. 🔙 Retour au Menu Principal  ║")
+	fmt.Println("╚═════════════════════════════════╝")
+	fmt.Print("👉 Votre choix : ")
+}
 func AddInventory(perso *Personnage, item string) {
 	if InventairePlein(perso) == false {
 		perso.Inventaire = append(perso.Inventaire, item)
