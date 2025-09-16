@@ -8,11 +8,23 @@ type Inventaire struct {
 }
 
 func AccessInventory(perso Personnage) {
-	fmt.Println("=== Inventaire Joueur ===")
-	for _, c := range perso.Inventaire {
-		fmt.Println(c)
+	fmt.Println("\n╔════════════════════════════════════════════╗")
+	fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
+	fmt.Println("╠════════════════════════════════════════════╣")
+
+	if len(perso.Inventaire) == 0 {
+		fmt.Println("║ (Inventaire vide)                          ║")
+	} else {
+		for _, item := range perso.Inventaire {
+			if len(item) > 36 {
+				item = item[:33] + "..."
+			}
+			fmt.Printf("║ • %-38s   ║\n", item)
+		}
 	}
-	fmt.Println("1. Retour au Menu Principal")
+
+	fmt.Println("╚════════════════════════════════════════════╝")
+	fmt.Println("1. 🔙 Retour au Menu Principal")
 }
 
 func AddInventory(perso *Personnage, item string) {

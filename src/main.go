@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	perso := RED.InitCharacter("Aragorn", "Ranger", 10, 100, 100, []string{"Arc", "Flèches", "Potion"})
+	perso := RED.CharacterCreation()
 	Menu(&perso)
 }
 
