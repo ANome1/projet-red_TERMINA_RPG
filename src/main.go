@@ -33,6 +33,9 @@ func Menu(perso *RED.Personnage) {
 			case "1":
 				Menu(perso)
 			}
+		case "2":
+			RED.TakePot(perso)
+			Menu(perso)
 		case "3":
 			Menu(perso)
 		}

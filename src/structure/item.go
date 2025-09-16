@@ -9,7 +9,7 @@ type Items struct {
 	Valeur int
 }
 
-func (perso *Personnage) TakePot() {
+func TakePot(perso *Personnage) {
 	for i, v := range perso.Inventaire {
 		if v == "Potion" {
 			if perso.PvActuels < perso.PvMax {
@@ -28,8 +28,8 @@ func (perso *Personnage) TakePot() {
 				perso.Inventaire = Inv
 
 				fmt.Println("\n╔════════════════════════════════════════════╗")
-				fmt.Println("║ 🧪 Vous avez utilisé une Potion !           ║")
-				fmt.Printf("║ ❤️ PV actuels : %-28d ║\n", perso.PvActuels)
+				fmt.Println("║ 🧪 Vous avez utilisé une Potion !          ║")
+				fmt.Printf("║ ❤️  PV actuels :%-28d║\n", perso.PvActuels)
 				fmt.Println("╚════════════════════════════════════════════╝")
 				return
 			} else {
