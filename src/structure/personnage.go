@@ -31,4 +31,13 @@ func DisplayInfo(perso Personnage) {
 	fmt.Println("Niveau :", perso.Niveau)
 	fmt.Println("PV actuels :", perso.PvActuels)
 	fmt.Println("PV max :", perso.PvMax)
+	fmt.Println("1. Retour au Menu Principal")
+}
+
+func IsDead(perso *Personnage) {
+	if perso.PvActuels <= 0 {
+		fmt.Println("💀", perso.Nom, "est mort...")
+		perso.PvActuels = perso.PvMax / 2
+		fmt.Println("✨", perso.Nom, "a été ressuscité avec", perso.PvActuels, "PV.")
+	}
 }
