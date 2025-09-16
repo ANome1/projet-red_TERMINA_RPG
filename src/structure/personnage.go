@@ -116,8 +116,9 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ 📈 Niveau : %-30d ║\n", perso.Niveau)
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
+	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
-	fmt.Println("1. 🔙 Retour au Menu Principal")
+	fmt.Println("👉 Votre choix :")
 }
 
 func IsDead(perso *Personnage) {
