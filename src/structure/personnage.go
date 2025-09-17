@@ -17,10 +17,11 @@ type Personnage struct {
 	PvActuels  int
 	Gold       int
 	Skill      []string
-	Inventaire []string
+	Inventaire Inventaire
+	Equipement SlotsEquipement
 }
 
-func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string, skill []string, gold int) Personnage {
+func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire Inventaire, skill []string, gold int, equipement SlotsEquipement) Personnage {
 	return Personnage{
 		Nom:        nom,
 		Classe:     classe,
@@ -30,6 +31,7 @@ func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels i
 		Gold:       gold,
 		Skill:      skill,
 		Inventaire: inventaire,
+		Equipement: equipement,
 	}
 }
 
@@ -81,19 +83,24 @@ func CharacterCreation() Personnage {
 	var pvMax int
 	if classe == classes[0] {
 		pvMax = 100
-	}
-	if classe == classes[1] {
+	} else if classe == classes[1] {
 		pvMax = 80
-	}
-	if classe == classes[2] {
+	} else if classe == classes[2] {
 		pvMax = 120
 	}
+
 	gold := 100
 	pvActuels := pvMax / 2
-	inventaire := []string{}
-	skill := []string{"Coup de poing"}
+	inventaire := Inventaire{
+		Items:      []string{},
+		Max:        10,
+		CptUpgrade: 0,
+	}
 
-	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill, gold)
+	skill := []string{"Coup de poing"}
+	equipement := SlotsEquipement{}
+
+	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill, gold, equipement)
 
 	RED.ClearTerminal()
 	fmt.Println("\n╔════════════════════════════════════╗")
@@ -111,9 +118,8 @@ func CharacterCreation() Personnage {
 }
 
 func SpellBook(perso *Personnage) {
-	// Vérifie si le joueur a un "Livre de Sort : Boule de Feu"
 	aLeLivre := false
-	for _, item := range perso.Inventaire {
+	for _, item := range perso.Inventaire.Items {
 		if item == "Livre de Sort : Boule de Feu" {
 			aLeLivre = true
 			break
@@ -125,7 +131,6 @@ func SpellBook(perso *Personnage) {
 		return
 	}
 
-	// Vérifie si le sort est déjà appris
 	sort := "Boule de feu"
 	for _, s := range perso.Skill {
 		if s == sort {
@@ -134,18 +139,17 @@ func SpellBook(perso *Personnage) {
 		}
 	}
 
-	// Apprendre le sort
 	perso.Skill = append(perso.Skill, sort)
 	fmt.Println("🔥 Vous avez appris le sort :", sort)
 
-	// Retirer le livre de l'inventaire après utilisation
+	// Retirer le livre
 	nouvelInventaire := []string{}
-	for _, item := range perso.Inventaire {
+	for _, item := range perso.Inventaire.Items {
 		if item != "Livre de Sort : Boule de Feu" {
 			nouvelInventaire = append(nouvelInventaire, item)
 		}
 	}
-	perso.Inventaire = nouvelInventaire
+	perso.Inventaire.Items = nouvelInventaire
 	fmt.Println("📖 Le 'Livre de Sort : Boule de Feu' a été consommé.")
 }
 
