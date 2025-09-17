@@ -58,9 +58,9 @@ func CharacterCreation() Personnage {
 		fmt.Println("\n╔════════════════════════════╗")
 		fmt.Println("║  🔰 Choisissez une classe  ║")
 		fmt.Println("╠════════════════════════════╣")
-		fmt.Println("║ 1. ⚔️   Humains             ║")
-		fmt.Println("║ 2. 🧙  Elfes               ║")
-		fmt.Println("║ 3. 🏹  Nains               ║")
+		fmt.Println("║ [1] ⚔️   Humains            ║")
+		fmt.Println("║ [2] 🧙  Elfes              ║")
+		fmt.Println("║ [3] 🏹  Nains              ║")
 		fmt.Println("╚════════════════════════════╝")
 		fmt.Print("👉 Votre choix : ")
 
@@ -175,8 +175,8 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ 📈 Niveau : %-30d ║\n", perso.Niveau)
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
-	fmt.Printf("║ 💰 Gold : %-26d       ║\n", perso.Gold)
-	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
+	fmt.Printf("║ 💰 Po : %-26d         ║\n", perso.Gold)
+	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }
@@ -192,7 +192,7 @@ func InfoSort(perso *Personnage) {
 		fmt.Printf("║ • %-38s   ║\n", item)
 	}
 
-	fmt.Println("║ 🔙 Retour au Menu Principal (1)            ║")
+	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }
