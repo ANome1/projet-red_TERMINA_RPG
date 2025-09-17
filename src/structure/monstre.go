@@ -135,16 +135,3 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre, tour *int) {
 		}
 	}
 }
-
-func MenuAttaque(perso *Personnage) {
-	fmt.Println("\n╔══════════════════════════════════════════════╗")
-	fmt.Println("║                ⚔️  ATTAQUE                    ║")
-	fmt.Println("╠══════════════════════════════════════════════╣")
-
-	for i, skill := range perso.Skill {
-		fmt.Printf("║ [%d] %s\n", i+1, skill)
-	}
-
-	fmt.Println("╚══════════════════════════════════════════════╝")
-	fmt.Print("👉 Votre choix : ")
-}

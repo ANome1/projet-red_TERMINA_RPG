@@ -231,3 +231,14 @@ func IsDead(perso *Personnage) {
 		fmt.Println("✨", perso.Nom, "a été ressuscité avec", perso.PvActuels, "PV.")
 	}
 }
+
+func MenuAttaque(perso *Personnage) {
+	fmt.Println("\n╔══════════════════════════════════════════════╗")
+	fmt.Println("║               ⚔️  MENU D'ATTAQUE              ║")
+	fmt.Println("╠══════════════════════════════════════════════╣")
+	for i, skill := range perso.Skill {
+		fmt.Printf("║ [%d] %s\n", i+1, skill)
+	}
+	fmt.Println("╚══════════════════════════════════════════════╝")
+	fmt.Print("👉 Votre choix : ")
+}
