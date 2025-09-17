@@ -180,7 +180,7 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
 	fmt.Printf("║ 💰 Po : %-26d         ║\n", perso.Gold)
-	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
+	fmt.Println("║ 🔙 Retour au Menu Principal [X]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }
@@ -196,7 +196,7 @@ func InfoSort(perso *Personnage) {
 		fmt.Printf("║ • %-38s   ║\n", item)
 	}
 
-	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
+	fmt.Println("║ 🔙 Retour au Menu Principal [X]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }

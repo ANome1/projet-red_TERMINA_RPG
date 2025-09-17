@@ -23,7 +23,7 @@ func InterfaceMarchand() {
 	fmt.Println("║ [5] 🧌  Peau de Troll : 7 PO                  ║")
 	fmt.Println("║ [6] 🐗 Cuir de Sanglier : 3 PO               ║")
 	fmt.Println("║ [7] 🪶  Plume de Corbeau : 1 PO               ║")
-	fmt.Println("║ [9] 🔙 Retour au Menu Principal              ║")
+	fmt.Println("║ [X] 🔙 Retour au Menu Principal              ║")
 	fmt.Println("╚══════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix 😊")
 }
