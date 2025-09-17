@@ -55,10 +55,24 @@ func Menu(perso *RED.Personnage) {
 				REDM.ClearTerminal()
 				Menu(perso)
 			}
-		case "3": // Livre de sorts
+		case "3":
 			REDM.ClearTerminal()
-			RED.SpellBook(perso)
-			Menu(perso)
+			RED.InventaireLivres(perso)
+			choix3 := REDM.LireChoix()
+			switch choix3 {
+			case "1":
+				REDM.ClearTerminal()
+				RED.SpellBookFeu(perso)
+				Menu(perso)
+			case "2":
+				REDM.ClearTerminal()
+				RED.SpellBookInv(perso)
+				RED.UpgradeInventory(perso)
+				Menu(perso)
+			case "3":
+				REDM.ClearTerminal()
+				Menu(perso)
+			}
 		case "4": // Équipements
 			REDM.ClearTerminal()
 			RED.InventaireEquipement(perso)
@@ -69,7 +83,7 @@ func Menu(perso *RED.Personnage) {
 
 			switch choixEquip {
 			case "1": // Équiper
-				// Affiche les équipements disponibles dans l’inventaire
+				REDM.ClearTerminal() // Nettoie avant d’afficher les équipements disponibles
 				fmt.Println("\nÉquipements disponibles à équiper :")
 				for i, equip := range RED.Equipements {
 					if RED.HasItem(perso, equip.Nom) {
@@ -78,6 +92,8 @@ func Menu(perso *RED.Personnage) {
 				}
 				fmt.Print("Choisissez le numéro de l’équipement : ")
 				num := REDM.LireChoix()
+
+				REDM.ClearTerminal() // Nettoie avant d’afficher le résultat
 				for i, equip := range RED.Equipements {
 					if fmt.Sprint(i+1) == num {
 						if RED.HasItem(perso, equip.Nom) {
@@ -90,6 +106,7 @@ func Menu(perso *RED.Personnage) {
 				}
 
 			case "2": // Déséquiper
+				REDM.ClearTerminal() // Nettoie avant d’afficher les équipements équipés
 				fmt.Println("\nÉquipements équipés :")
 				if perso.Equipement.Tete != nil {
 					fmt.Println("[1] Tête :", perso.Equipement.Tete.Nom)
@@ -102,6 +119,8 @@ func Menu(perso *RED.Personnage) {
 				}
 				fmt.Print("Choisissez le numéro de la catégorie à déséquiper : ")
 				num := REDM.LireChoix()
+
+				REDM.ClearTerminal() // Nettoie avant d’afficher le résultat
 				switch num {
 				case "1":
 					RED.Desequiper(perso, "Tête")
@@ -116,9 +135,6 @@ func Menu(perso *RED.Personnage) {
 			case "3":
 				REDM.ClearTerminal()
 			}
-			Menu(perso)
-		case "5":
-			REDM.ClearTerminal()
 			Menu(perso)
 		}
 
@@ -156,6 +172,15 @@ func Menu(perso *RED.Personnage) {
 			Menu(perso)
 		case "4":
 			REDM.ClearTerminal()
+			if perso.Gold >= 30 {
+				RED.AddInventory(perso, "Livre de Sort : UP Inventaire")
+				perso.Gold -= 30
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
+			Menu(perso)
+		case "5":
+			REDM.ClearTerminal()
 			if perso.Gold >= 4 {
 				RED.AddInventory(perso, "Fourrure de Loup")
 				perso.Gold -= 4
@@ -163,7 +188,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "5":
+		case "6":
 			REDM.ClearTerminal()
 			if perso.Gold >= 7 {
 				RED.AddInventory(perso, "Peau de Troll")
@@ -172,7 +197,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "6":
+		case "7":
 			REDM.ClearTerminal()
 			if perso.Gold >= 3 {
 				RED.AddInventory(perso, "Cuir de Sanglier")
@@ -181,7 +206,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "7":
+		case "8":
 			REDM.ClearTerminal()
 			if perso.Gold >= 1 {
 				RED.AddInventory(perso, "Plume de Corbeau")
@@ -190,7 +215,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "8":
+		case "9":
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
@@ -212,16 +237,19 @@ func Menu(perso *RED.Personnage) {
 		case "1":
 			materiaux := map[string]int{"Plume de Corbeau": 1, "Cuir de Sanglier": 1}
 			equip := RED.Equipements[0]
+			REDM.ClearTerminal()
 			RED.Forger(perso, equip, materiaux)
 			Menu(perso)
 		case "2":
 			materiaux := map[string]int{"Fourrure de Loup": 2, "Peau de Troll": 1}
 			equip := RED.Equipements[1]
+			REDM.ClearTerminal()
 			RED.Forger(perso, equip, materiaux)
 			Menu(perso)
 		case "3":
 			materiaux := map[string]int{"Fourrure de Loup": 1, "Cuir de Sanglier": 1}
 			equip := RED.Equipements[2]
+			REDM.ClearTerminal()
 			RED.Forger(perso, equip, materiaux)
 			Menu(perso)
 		case "4":
@@ -229,7 +257,7 @@ func Menu(perso *RED.Personnage) {
 			Menu(perso)
 		}
 
-	case "6": // Quitter
+	case "X", "x": // Quitter
 		REDM.ClearTerminal()
 		fmt.Println("\n╔═════════════════════════════════════════════════╗")
 		fmt.Println("║       🎮 A bientôt ! Merci d'avoir joué !       ║")

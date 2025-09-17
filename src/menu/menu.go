@@ -11,7 +11,7 @@ func AfficherMenu() {
 	fmt.Println("║ [3] 🛒 Interface du Marchand                 ║")
 	fmt.Println("║ [4] 📚 Sort du Joueur                        ║")
 	fmt.Println("║ [5] ⚒️  Forgeron                              ║")
-	fmt.Println("║ [6] ❌ Quitter                               ║")
+	fmt.Println("║ [X] ❌ Quitter le jeu                        ║")
 	fmt.Println("╚══════════════════════════════════════════════╝")
 	fmt.Print("👉 Votre choix : ")
 }
