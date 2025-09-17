@@ -6,7 +6,6 @@ import (
 )
 
 func PoisonPot(perso *Personnage) {
-	// Vérifie si le joueur a une Potion de Poison
 	aPotion := false
 	for _, item := range perso.Inventaire.Items {
 		if item == "Potion de poison" {
