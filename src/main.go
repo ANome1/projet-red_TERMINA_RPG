@@ -57,8 +57,22 @@ func Menu(perso *RED.Personnage) {
 			}
 		case "3":
 			REDM.ClearTerminal()
-			RED.SpellBook(perso)
-			Menu(perso)
+			RED.InventaireLivres(perso)
+			choix3 := REDM.LireChoix()
+			switch choix3 {
+			case "1":
+				REDM.ClearTerminal()
+				RED.SpellBookFeu(perso)
+				Menu(perso)
+			case "2":
+				REDM.ClearTerminal()
+				RED.SpellBookInv(perso)
+				RED.UpgradeInventory(perso)
+				Menu(perso)
+			case "3":
+				REDM.ClearTerminal()
+				Menu(perso)
+			}
 		case "4":
 			REDM.ClearTerminal()
 			Menu(perso)
@@ -98,6 +112,15 @@ func Menu(perso *RED.Personnage) {
 			Menu(perso)
 		case "4":
 			REDM.ClearTerminal()
+			if perso.Gold >= 30 {
+				RED.AddInventory(perso, "Livre de Sort : UP Inventaire")
+				perso.Gold -= 30
+			} else {
+				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
+			}
+			Menu(perso)
+		case "5":
+			REDM.ClearTerminal()
 			if perso.Gold >= 4 {
 				RED.AddInventory(perso, "Fourrure de Loup")
 				perso.Gold -= 4
@@ -105,7 +128,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "5":
+		case "6":
 			REDM.ClearTerminal()
 			if perso.Gold >= 7 {
 				RED.AddInventory(perso, "Peau de Troll")
@@ -114,7 +137,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "6":
+		case "7":
 			REDM.ClearTerminal()
 			if perso.Gold >= 3 {
 				RED.AddInventory(perso, "Cuir de Sanglier")
@@ -123,7 +146,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "7":
+		case "8":
 			REDM.ClearTerminal()
 			if perso.Gold >= 1 {
 				RED.AddInventory(perso, "Plume de Corbeau")
@@ -132,7 +155,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "8":
+		case "9":
 			REDM.ClearTerminal()
 			Menu(perso)
 		}

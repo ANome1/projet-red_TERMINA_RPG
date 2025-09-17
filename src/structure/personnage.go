@@ -17,10 +17,10 @@ type Personnage struct {
 	PvActuels  int
 	Gold       int
 	Skill      []string
-	Inventaire []string
+	Inventaire Inventaire
 }
 
-func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire []string, skill []string, gold int) Personnage {
+func InitCharacter(nom string, classe string, niveau int, pvMax int, pvActuels int, inventaire Inventaire, skill []string, gold int) Personnage {
 	return Personnage{
 		Nom:        nom,
 		Classe:     classe,
@@ -90,7 +90,11 @@ func CharacterCreation() Personnage {
 	}
 	gold := 100
 	pvActuels := pvMax / 2
-	inventaire := []string{}
+	inventaire := Inventaire{
+		Items: []string{},
+		Max:   10,
+	}
+
 	skill := []string{"Coup de poing"}
 
 	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill, gold)
@@ -110,10 +114,9 @@ func CharacterCreation() Personnage {
 	return personnage
 }
 
-func SpellBook(perso *Personnage) {
-	// Vérifie si le joueur a un "Livre de Sort : Boule de Feu"
+func SpellBookFeu(perso *Personnage) {
 	aLeLivre := false
-	for _, item := range perso.Inventaire {
+	for _, item := range perso.Inventaire.Items {
 		if item == "Livre de Sort : Boule de Feu" {
 			aLeLivre = true
 			break
@@ -125,7 +128,6 @@ func SpellBook(perso *Personnage) {
 		return
 	}
 
-	// Vérifie si le sort est déjà appris
 	sort := "Boule de feu"
 	for _, s := range perso.Skill {
 		if s == sort {
@@ -140,13 +142,35 @@ func SpellBook(perso *Personnage) {
 
 	// Retirer le livre de l'inventaire après utilisation
 	nouvelInventaire := []string{}
-	for _, item := range perso.Inventaire {
+	for _, item := range perso.Inventaire.Items {
 		if item != "Livre de Sort : Boule de Feu" {
 			nouvelInventaire = append(nouvelInventaire, item)
 		}
 	}
-	perso.Inventaire = nouvelInventaire
+	perso.Inventaire.Items = nouvelInventaire
 	fmt.Println("📖 Le 'Livre de Sort : Boule de Feu' a été consommé.")
+}
+func SpellBookInv(perso *Personnage) {
+	aLeLivre := false
+	for _, item := range perso.Inventaire.Items {
+		if item == "Livre de Sort : UP Inventaire" {
+			aLeLivre = true
+			break
+		}
+	}
+	if !aLeLivre {
+		fmt.Println("❌ Vous n'avez pas de 'Livre de Sort : UP Inventaire' dans votre inventaire.")
+		return
+	}
+
+	nouvelInventaire := []string{}
+	for _, item := range perso.Inventaire.Items {
+		if item != "Livre de Sort : UP Inventaire" {
+			nouvelInventaire = append(nouvelInventaire, item)
+		}
+	}
+	perso.Inventaire.Items = nouvelInventaire
+	fmt.Println("📖 Le 'Livre de Sort : UP Inventaire' a été consommé.")
 }
 
 func estNomValide(nom string) bool {
@@ -183,7 +207,7 @@ func DisplayInfo(perso Personnage) {
 
 func InfoSort(perso *Personnage) {
 	fmt.Println("\n╔════════════════════════════════════════════╗")
-	fmt.Println("║           📚 SORT DU JOUEUR                ║")
+	fmt.Println("║             📚 SORT DU JOUEUR              ║")
 	fmt.Println("╠════════════════════════════════════════════╣")
 	for _, item := range perso.Skill {
 		if len(item) > 36 {
