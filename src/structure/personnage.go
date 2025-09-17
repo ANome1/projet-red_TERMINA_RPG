@@ -1,7 +1,6 @@
 package RED
 
 import (
-	RED "RED/menu"
 	"bufio"
 	"fmt"
 	"os"
@@ -101,8 +100,6 @@ func CharacterCreation() Personnage {
 	equipement := SlotsEquipement{}
 
 	personnage := InitCharacter(nom, classe, niveau, pvMax, pvActuels, inventaire, skill, gold, equipement)
-
-	RED.ClearTerminal()
 	fmt.Println("\n╔════════════════════════════════════╗")
 	fmt.Println("║   🎉 PERSONNAGE CRÉÉ AVEC SUCCÈS   ║")
 	fmt.Println("╠════════════════════════════════════╣")
@@ -112,8 +109,6 @@ func CharacterCreation() Personnage {
 
 	fmt.Print("\n✨ Appuyez sur Entrée pour commencer votre aventure...")
 	reader.ReadString('\n')
-
-	RED.ClearTerminal()
 	return personnage
 }
 
@@ -230,4 +225,15 @@ func IsDead(perso *Personnage) {
 		perso.PvActuels = perso.PvMax / 2
 		fmt.Println("✨", perso.Nom, "a été ressuscité avec", perso.PvActuels, "PV.")
 	}
+}
+
+func MenuAttaque(perso *Personnage) {
+	fmt.Println("\n╔══════════════════════════════════════════════╗")
+	fmt.Println("║               ⚔️  MENU D'ATTAQUE              ║")
+	fmt.Println("╠══════════════════════════════════════════════╣")
+	for i, skill := range perso.Skill {
+		fmt.Printf("║ [%d] %s\n", i+1, skill)
+	}
+	fmt.Println("╚══════════════════════════════════════════════╝")
+	fmt.Print("👉 Votre choix : ")
 }

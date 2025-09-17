@@ -19,7 +19,7 @@ func main() {
 }
 
 func Menu(perso *RED.Personnage) {
-
+	REDM.ClearTerminal()
 	REDM.AfficherMenu()
 	choix := REDM.LireChoix()
 
@@ -268,24 +268,38 @@ func Menu(perso *RED.Personnage) {
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
-
-	case "A", "a": // Combat contre un gobelin
+	case "A", "a": // Combat Gobelin
+		RED.MenuGobelin(perso)
+		REDM.Pause(2)
 		REDM.ClearTerminal()
 		gobelin := RED.InitGobelin()
-		RED.MenuGobelin(perso)
 		tour := 1
-		for perso.PvActuels > 0 && gobelin.PvActuels > 0 {
-			RED.GoblinPattern(&gobelin, perso, tour)
-			tour++
+
+		for gobelin.PvActuels > 0 && perso.PvActuels > 0 {
+			// Tour du joueur
+			RED.CharacterTurn(perso, &gobelin, &tour)
+
+			// Vérifier si le gobelin est mort
 			if gobelin.PvActuels <= 0 {
-				fmt.Println("\n🎉 Vous avez vaincu le Gobelin d'entraînement ! 🎉")
+				fmt.Println("\n╔════════════════════════════════════════════╗")
+				fmt.Println("║🎉 Vous avez vaincu le Gobelin d'entraînement !║")
+				fmt.Println("╚════════════════════════════════════════════╝")
+				break
 			}
-			// Logique de combat ici
+
+			// Vérifier si le joueur est mort
 			if perso.PvActuels <= 0 {
+				REDM.ClearTerminal()
+				fmt.Println("\n╔═════════════════════════════════════════════════╗")
+				fmt.Println("║💀 Vous avez été vaincu par le Gobelin...       ║")
+				fmt.Println("╚═════════════════════════════════════════════════╝")
 				RED.IsDead(perso)
 				break
 			}
 		}
+		fmt.Println("\n🔙 Retour automatique au menu principal...")
+		REDM.Pause(2)
+		Menu(perso)
 
 	case "x", "X": // Quitter
 		REDM.ClearTerminal()

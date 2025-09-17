@@ -5,6 +5,18 @@ import (
 	"time"
 )
 
+type Items struct {
+	categorie string
+	nom       string
+	effet     string
+	valEffet  int
+}
+
+var ItemsList = []Items{
+	{"Potion", "Potion de soin", "Soins", 50},
+	{"Potion", "Potion de poison", "Poison", -30},
+}
+
 type Equipement struct {
 	Nom       string
 	Categorie string
