@@ -63,7 +63,28 @@ func InventairePotion(perso *Personnage) {
 	fmt.Println("👉 Votre choix :")
 }
 
-// Affiche tout l’inventaire
+func InventaireLivres(perso *Personnage) {
+	livresDisponibles := []string{
+		"Livre de Sort : Boule de Feu",
+		"Livre de Sort : UP Inventaire",
+	}
+	compteur := make(map[string]int)
+	for _, item := range perso.Inventaire.Items {
+		compteur[item]++
+	}
+
+	fmt.Println("\n╔════════════════════════════════════════════╗")
+	fmt.Println("║            📚 LIVRES DE SORT               ║")
+	fmt.Println("╠════════════════════════════════════════════╣")
+	for _, livre := range livresDisponibles {
+		qte := compteur[livre]
+		fmt.Printf("║ • %-36s x%-3d║\n", livre, qte)
+	}
+	fmt.Println("║ 🔙 Retour au Menu Principal [3]            ║")
+	fmt.Println("╚════════════════════════════════════════════╝")
+	fmt.Println("👉 Votre choix :")
+}
+
 func AccessInventory(perso *Personnage) {
 	fmt.Println("\n╔════════════════════════════════════════════╗")
 	fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
@@ -128,16 +149,16 @@ func RemoveInventory(perso *Personnage, item string) {
 
 // Vérifie si l’inventaire est plein
 func InventairePlein(perso *Personnage) bool {
-	return len(perso.Inventaire.Items) >= perso.Inventaire.Max
+	return len(perso.Inventaire.Items) >= 10
 }
 
-// Augmente la taille de l’inventaire
 func UpgradeInventory(perso *Personnage) {
 	if perso.Inventaire.CptUpgrade >= 3 {
 		fmt.Println("❌ Vous avez atteint votre limite d'augmentation d'inventaire")
 	} else {
 		perso.Inventaire.Max += 10
 		perso.Inventaire.CptUpgrade += 1
+		fmt.Println("✅ Félicitations ! La taille de votre inentaire a été augmenté de : 10")
 	}
 }
 

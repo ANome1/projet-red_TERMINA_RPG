@@ -92,9 +92,8 @@ func CharacterCreation() Personnage {
 	gold := 100
 	pvActuels := pvMax / 2
 	inventaire := Inventaire{
-		Items:      []string{},
-		Max:        10,
-		CptUpgrade: 0,
+		Items: []string{},
+		Max:   10,
 	}
 
 	skill := []string{"Coup de poing"}
@@ -117,7 +116,7 @@ func CharacterCreation() Personnage {
 	return personnage
 }
 
-func SpellBook(perso *Personnage) {
+func SpellBookFeu(perso *Personnage) {
 	aLeLivre := false
 	for _, item := range perso.Inventaire.Items {
 		if item == "Livre de Sort : Boule de Feu" {
@@ -152,6 +151,28 @@ func SpellBook(perso *Personnage) {
 	perso.Inventaire.Items = nouvelInventaire
 	fmt.Println("📖 Le 'Livre de Sort : Boule de Feu' a été consommé.")
 }
+func SpellBookInv(perso *Personnage) {
+	aLeLivre := false
+	for _, item := range perso.Inventaire.Items {
+		if item == "Livre de Sort : UP Inventaire" {
+			aLeLivre = true
+			break
+		}
+	}
+	if !aLeLivre {
+		fmt.Println("❌ Vous n'avez pas de 'Livre de Sort : UP Inventaire' dans votre inventaire.")
+		return
+	}
+
+	nouvelInventaire := []string{}
+	for _, item := range perso.Inventaire.Items {
+		if item != "Livre de Sort : UP Inventaire" {
+			nouvelInventaire = append(nouvelInventaire, item)
+		}
+	}
+	perso.Inventaire.Items = nouvelInventaire
+	fmt.Println("📖 Le 'Livre de Sort : UP Inventaire' a été consommé.")
+}
 
 func estNomValide(nom string) bool {
 	for _, r := range nom {
@@ -179,7 +200,7 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ 📈 Niveau : %-30d ║\n", perso.Niveau)
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
-	fmt.Printf("║ 💰 Po : %-26d         ║\n", perso.Gold)
+	fmt.Printf("║ 💰 PO : %-26d         ║\n", perso.Gold)
 	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
@@ -187,7 +208,7 @@ func DisplayInfo(perso Personnage) {
 
 func InfoSort(perso *Personnage) {
 	fmt.Println("\n╔════════════════════════════════════════════╗")
-	fmt.Println("║           📚 SORT DU JOUEUR                ║")
+	fmt.Println("║             📚 SORT DU JOUEUR              ║")
 	fmt.Println("╠════════════════════════════════════════════╣")
 	for _, item := range perso.Skill {
 		if len(item) > 36 {
