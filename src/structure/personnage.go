@@ -199,7 +199,7 @@ func DisplayInfo(perso Personnage) {
 	fmt.Printf("║ 📈 Niveau : %-30d ║\n", perso.Niveau)
 	fmt.Printf("║ ❤️  PVActuels : %-26d  ║\n", perso.PvActuels)
 	fmt.Printf("║ 💖 PVMax : %-26d      ║\n", perso.PvMax)
-	fmt.Printf("║ 💰 Po : %-26d         ║\n", perso.Gold)
+	fmt.Printf("║ 💰 PO : %-26d         ║\n", perso.Gold)
 	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
