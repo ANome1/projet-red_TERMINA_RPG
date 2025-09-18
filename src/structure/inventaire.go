@@ -182,3 +182,14 @@ func CountItem(perso *Personnage, item string) int {
 	}
 	return count
 }
+
+func InventaireCombat(perso *Personnage) {
+	fmt.Println("\n╔════════════════════════════════════════════╗")
+	fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
+	fmt.Println("╠════════════════════════════════════════════╣")
+	fmt.Println("║ [1] 🧪 Utiliser une potion                 ║")
+	fmt.Println("║ [2] 🛡️ Liste d'equipements                 ║")
+	fmt.Println("║ [X] 🔙 Retour au Menu de combat            ║")
+	fmt.Println("╚════════════════════════════════════════════╝")
+	fmt.Print("👉 Votre choix : ")
+}

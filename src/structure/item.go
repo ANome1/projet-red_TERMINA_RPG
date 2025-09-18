@@ -1,8 +1,8 @@
 package RED
 
 import (
+	REDM "RED/menu"
 	"fmt"
-	"time"
 )
 
 type Equipement struct {
@@ -98,7 +98,7 @@ func PoisonPot(perso *Personnage) {
 	fmt.Println("\n╔═════════════════════════════════════════════════╗")
 	fmt.Println("║ ☠️  Vous avez utilisé une Potion de Poison !     ║")
 	for i := 1; i <= 3; i++ {
-		time.Sleep(1 * time.Second)
+		REDM.Pause(1)
 		perso.PvActuels -= 10
 		if perso.PvActuels < 0 {
 			perso.PvActuels = 0
@@ -167,10 +167,15 @@ func Forger(perso *Personnage, equip Equipement, materiaux map[string]int) {
 
 	// Soustraire le prix du craft
 	perso.Gold -= 5
+	REDM.ClearTerminal()
+	fmt.Println("\n╔══════════════════════════════════════════════════╗")
+	fmt.Println("║ Le forgeron travaille, veuillez patienter...  ⚒️  ║")
+	fmt.Println("╚══════════════════════════════════════════════════╝")
+	REDM.Pause(5)
+	REDM.ClearTerminal()
 
 	// Ajouter l’équipement à l'inventaire (mais pas équipé)
 	AddInventory(perso, equip.Nom)
-
-	fmt.Println("✅ Vous avez forgé :", equip.Nom, "→ ajouté à votre inventaire")
+	fmt.Println("✅ Le forgeron a forgé :", equip.Nom, "→ ajouté à votre inventaire")
 	fmt.Println("💰 5 Po ont été dépensés pour le crafting")
 }

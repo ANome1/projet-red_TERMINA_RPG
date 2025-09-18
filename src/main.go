@@ -4,7 +4,6 @@ import (
 	REDM "RED/menu"
 	RED "RED/structure"
 	"fmt"
-	"time"
 )
 
 func main() {
@@ -12,7 +11,7 @@ func main() {
 	fmt.Println("\n╔═════════════════════════════════════════════════╗")
 	fmt.Println("║        🎮 BIENVENUE DANS TERMINA RPG            ║")
 	fmt.Println("╚═════════════════════════════════════════════════╝")
-	time.Sleep(3 * time.Second)
+	REDM.Pause(3)
 	REDM.ClearTerminal()
 	perso := RED.CharacterCreation()
 	Menu(&perso)
@@ -42,7 +41,7 @@ func Menu(perso *RED.Personnage) {
 			REDM.ClearTerminal()
 			RED.AccessInventory(perso)
 			choix3 := REDM.LireChoix()
-			if choix3 == "1" {
+			if choix3 == "x" || choix3 == "X" {
 				REDM.ClearTerminal()
 				Menu(perso)
 			}
@@ -272,20 +271,8 @@ func Menu(perso *RED.Personnage) {
 	case "A", "a": // Combat contre un gobelin
 		REDM.ClearTerminal()
 		gobelin := RED.InitGobelin()
-		RED.MenuGobelin(perso)
-		tour := 1
-		for perso.PvActuels > 0 && gobelin.PvActuels > 0 {
-			RED.GoblinPattern(&gobelin, perso, tour)
-			tour++
-			if gobelin.PvActuels <= 0 {
-				fmt.Println("\n🎉 Vous avez vaincu le Gobelin d'entraînement ! 🎉")
-			}
-			// Logique de combat ici
-			if perso.PvActuels <= 0 {
-				RED.IsDead(perso)
-				break
-			}
-		}
+		RED.MenuGobelin(&gobelin, perso)
+		//tour := 1
 
 	case "x", "X": // Quitter
 		REDM.ClearTerminal()

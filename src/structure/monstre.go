@@ -3,7 +3,6 @@ package RED
 import (
 	REDM "RED/menu"
 	"fmt"
-	"time"
 )
 
 type Monstre struct {
@@ -21,7 +20,7 @@ func InitGobelin() Monstre {
 		Attaque:   5,
 	}
 }
-func MenuGobelin(perso *Personnage) {
+func MenuGobelin(gobelin *Monstre, perso *Personnage) {
 	REDM.ClearTerminal()
 	fmt.Println("\n╔══════════════════════════════════════════════╗")
 	fmt.Println("║          ⚔️  COMBAT CONTRE UN GOBELIN         ║")
@@ -30,7 +29,8 @@ func MenuGobelin(perso *Personnage) {
 	fmt.Println("║ Montrez-lui de quoi vous êtes capable !      ║")
 	fmt.Println("╚══════════════════════════════════════════════╝")
 	fmt.Printf("\n💖 Vous avez %d/%d points de vie.\n", perso.PvActuels, perso.PvMax)
-	time.Sleep(3 * time.Second)
+	fmt.Printf("\n💖 Le %s a %d/%d points de vie.\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
+	REDM.Pause(3)
 	REDM.ClearTerminal()
 }
 
