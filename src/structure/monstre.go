@@ -64,7 +64,7 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 		fmt.Println("║               VOTRE TOUR                ║")
 		fmt.Println("╠═════════════════════════════════════════╣")
 		fmt.Println("║ [1] 📜 Infos du personnage              ║")
-		fmt.Println("║ [2] ⚔️ Attaquer                          ║")
+		fmt.Println("║ [2] ⚔️  Attaquer                         ║")
 		fmt.Println("║ [3] 🎒 Inventaire                       ║")
 		fmt.Println("║ [X] ❌ Fuir le combat                   ║")
 		fmt.Println("╚═════════════════════════════════════════╝")
@@ -113,7 +113,12 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 			continue
 
 		case "X", "x": // Fuir
-			fmt.Println("🏃‍♂️ Vous avez essayé de fuir le combat MAIS LE GOBELIN VOUS RATTRAPE !")
+			fmt.Println("💨 Vous avez essayé de fuir le combat MAIS...")
+			RED.Pause(2)
+			fmt.Println("👹 LE GOBELIN VOUS RATTRAPE !")
+			RED.Pause(2)
+			fmt.Println("FINISSEZ EN AVEC LUI UN BONNE FOIS POUR TOUTE !")
+			RED.Pause(2)
 			return false
 
 		default:

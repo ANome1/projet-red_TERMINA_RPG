@@ -204,10 +204,13 @@ func InventaireCombat(perso *Personnage) bool {
 		case "1": // Potions
 			for {
 				REDM.ClearTerminal()
-				fmt.Println("\n🎒 Choisissez une potion :")
-				fmt.Println("[1] Potion de soin")
-				fmt.Println("[2] Potion de poison")
-				fmt.Println("[X] 🔙 Retour")
+				fmt.Println("\n╔════════════════════════════════════════════╗")
+				fmt.Println("║           🎒 CHOISISSEZ UNE POTION         ║")
+				fmt.Println("╠════════════════════════════════════════════╣")
+				fmt.Println("║ [1] 🧪 Potion de soin                      ║")
+				fmt.Println("║ [2] 🧪 Potion de poison                    ║")
+				fmt.Println("║ [X] 🔙 Retour                              ║")
+				fmt.Println("╚════════════════════════════════════════════╝")
 				fmt.Print("👉 Votre choix : ")
 
 				potChoix := REDM.LireChoix()
@@ -229,10 +232,9 @@ func InventaireCombat(perso *Personnage) bool {
 		case "2": // Équipements
 			for {
 				REDM.ClearTerminal()
-				fmt.Println("🛡️ Voir équipements en combat :")
+				fmt.Println("🛡️  Voir équipements en combat :")
 				InventaireEquipement(perso) // Affiche les équipements disponibles
 				fmt.Println("[X] 🔙 Retour")
-				fmt.Print("👉 Choisissez l'équipement à équiper : ")
 
 				equipChoix := REDM.LireChoix()
 				if equipChoix == "x" || equipChoix == "X" {
