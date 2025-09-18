@@ -270,6 +270,8 @@ func Menu(perso *RED.Personnage) {
 
 	case "A", "a": // Combat contre un gobelin d'entrainement
 		REDM.ClearTerminal()
+		RED.TrainingFight(perso) // Lancement du combat
+		Menu(perso)              // Retour au menu principal après le combat
 
 	case "x", "X": // Quitter
 		REDM.ClearTerminal()

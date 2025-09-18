@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// Structure du monstre
 type Monstre struct {
 	Nom       string
 	PvMax     int
@@ -12,6 +13,7 @@ type Monstre struct {
 	Attaque   int
 }
 
+// Initialisation d'un Gobelin d'entraînement
 func InitGobelin() Monstre {
 	return Monstre{
 		Nom:       "Gobelin d'entraînement",
@@ -20,6 +22,8 @@ func InitGobelin() Monstre {
 		Attaque:   5,
 	}
 }
+
+// Affichage du menu de combat et des PV
 func MenuGobelin(gobelin *Monstre, perso *Personnage) {
 	REDM.ClearTerminal()
 	fmt.Println("\n╔══════════════════════════════════════════════╗")
@@ -29,30 +33,46 @@ func MenuGobelin(gobelin *Monstre, perso *Personnage) {
 	fmt.Println("║ Montrez-lui de quoi vous êtes capable !      ║")
 	fmt.Println("╚══════════════════════════════════════════════╝")
 	fmt.Printf("\n💖 Vous avez %d/%d points de vie.\n", perso.PvActuels, perso.PvMax)
-	fmt.Printf("\n💖 Le %s a %d/%d points de vie.\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
+	fmt.Printf("💖 Le %s a %d/%d points de vie.\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
 	REDM.Pause(3)
 	REDM.ClearTerminal()
 }
 
+// Pattern d'attaque du Gobelin
 func GoblinPattern(gobelin *Monstre, perso *Personnage, tour int) {
-	var degats int
+	degats := gobelin.Attaque
 	if tour%3 == 0 {
-		degats = gobelin.Attaque * 2 // Double pour ce tour uniquement
-	} else {
-		degats = gobelin.Attaque
+		degats *= 2
 	}
 
-	// Appliquer les dégâts
 	perso.PvActuels -= degats
 	if perso.PvActuels < 0 {
 		perso.PvActuels = 0
 	}
 
-	// Affichage
-	fmt.Printf("\n⚔️  %s inflige à %s %d points de dégâts !\n", gobelin.Nom, perso.Nom, degats)
+	fmt.Printf("\n⚔️ %s inflige à %s %d points de dégâts !\n", gobelin.Nom, perso.Nom, degats)
 	fmt.Printf("💖 PV actuels : %d/%d\n", perso.PvActuels, perso.PvMax)
+
+	if perso.PvActuels == 0 {
+		IsDead(perso)
+	}
 }
 
+// Menu des sorts du joueur
+func MenuAttaque(perso *Personnage) {
+	fmt.Println("\n╔══════════════════════════════════════════════╗")
+	fmt.Println("║                ⚔️  ATTAQUE                    ║")
+	fmt.Println("╠══════════════════════════════════════════════╣")
+
+	for i, skill := range perso.Skill {
+		fmt.Printf("║ [%d] %s\n", i+1, skill)
+	}
+
+	fmt.Println("╚══════════════════════════════════════════════╝")
+	fmt.Print("👉 Votre choix : ")
+}
+
+// Tour du joueur
 func CharacterTurn(perso *Personnage, gobelin *Monstre, tour *int) {
 	fmt.Println("\n╔═════════════════════════════════════════╗")
 	fmt.Println("║               VOTRE TOUR                 ║")
@@ -62,21 +82,39 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre, tour *int) {
 	fmt.Println("║ [3] 🎒 Inventaire                        ║")
 	fmt.Println("║ [X] ❌ Fuir le combat                    ║")
 	fmt.Println("╚═════════════════════════════════════════╝")
-	fmt.Print("👉 Votre choix 😊 ")
+	fmt.Print("👉 Votre choix : ")
 
 	choix := REDM.LireChoix()
 
 	switch choix {
 	case "1": // Menu principal
-		REDM.MenuEnCombat() // appelle ton menu général
+		REDM.MenuEnCombat()
 	case "2": // Attaquer
-		degats := 5
-		gobelin.PvActuels -= degats
-		if gobelin.PvActuels < 0 {
-			gobelin.PvActuels = 0
+		MenuAttaque(perso) // Affiche les sorts disponibles
+		fmt.Print("👉 Choisissez un sort : ")
+		sortChoisi := REDM.LireChoix()
+		var degats int
+		idx := -1
+		fmt.Sscan(sortChoisi, &idx)
+		if idx >= 1 && idx <= len(perso.Skill) {
+			skill := perso.Skill[idx-1]
+			degats = 5 // par défaut pour tous les sorts ici
+			fmt.Printf("\n⚔️ %s utilise %s et inflige %d dégâts à %s !\n",
+				perso.Nom, skill, degats, gobelin.Nom)
+			gobelin.PvActuels -= degats
+			if gobelin.PvActuels < 0 {
+				gobelin.PvActuels = 0
+			}
+			fmt.Printf("💖 PV restants de %s : %d/%d\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
+		} else {
+			fmt.Println("❌ Choix invalide, attaque basique utilisée !")
+			degats = 5
+			gobelin.PvActuels -= degats
+			if gobelin.PvActuels < 0 {
+				gobelin.PvActuels = 0
+			}
+			fmt.Printf("⚔️ %s inflige %d dégâts à %s !\n", perso.Nom, degats, gobelin.Nom)
 		}
-		fmt.Printf("\n⚔️ %s utilise Attaque basique et inflige %d dégâts à %s !\n", perso.Nom, degats, gobelin.Nom)
-		fmt.Printf("💖 PV restants de %s : %d/%d\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
 
 		if gobelin.PvActuels <= 0 {
 			fmt.Println("🎉 Vous avez vaincu le gobelin !")
@@ -89,17 +127,9 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre, tour *int) {
 
 	case "3": // Inventaire
 		InventaireCombat(perso)
-		choixInv := REDM.LireChoix()
-		switch choixInv {
-		case "1":
-			TakePot(perso)
-		case "2":
-			fmt.Println("🛡️ Voir équipements non implémenté pour le combat")
-		case "X", "x":
-			return
-		default:
-			fmt.Println("❌ Choix invalide.")
-		}
+		// Après avoir utilisé l'inventaire, c'est au tour du gobelin
+		*tour++
+		GoblinPattern(gobelin, perso, *tour)
 
 	case "X", "x": // Fuir
 		fmt.Println("🏃‍♂️ Vous avez fui le combat !")
@@ -110,15 +140,50 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre, tour *int) {
 	}
 }
 
-func MenuAttaque(perso *Personnage) {
-	fmt.Println("\n╔══════════════════════════════════════════════╗")
-	fmt.Println("║                ⚔️  ATTAQUE                    ║")
-	fmt.Println("╠══════════════════════════════════════════════╣")
+func TrainingFight(perso *Personnage) {
+	// Initialisation du gobelin
+	gobelin := InitGobelin()
 
-	for i, skill := range perso.Skill {
-		fmt.Printf("║ [%d] %s\n", i+1, skill)
+	// Affichage du menu de début de combat
+	MenuGobelin(&gobelin, perso)
+
+	// Tour de combat
+	tour := 1
+
+	// Boucle de combat
+	for perso.PvActuels > 0 && gobelin.PvActuels > 0 {
+		fmt.Printf("\n--- Tour %d ---\n", tour)
+		REDM.Pause(2)
+
+		// Tour du joueur
+		CharacterTurn(perso, &gobelin, &tour)
+
+		// Vérifier si le gobelin est vaincu
+		if gobelin.PvActuels <= 0 {
+			fmt.Println("🎉 Félicitations ! Vous avez gagné le combat d'entraînement !")
+			break
+		}
+
+		// Tour du gobelin
+		fmt.Println("\n--- Tour du Gobelin ---")
+		REDM.Pause(2)
+		GoblinPattern(&gobelin, perso, tour)
+		REDM.ClearTerminal()
+
+		// Vérifier si le joueur est mort
+		if perso.PvActuels <= 0 {
+			fmt.Println("💀 Vous avez été vaincu par le gobelin...")
+			IsDead(perso)
+			break
+		}
+
+		// Affichage des PV à la fin du tour
+		fmt.Printf("💖 PV du joueur : %d/%d | PV du gobelin : %d/%d\n",
+			perso.PvActuels, perso.PvMax, gobelin.PvActuels, gobelin.PvMax)
+
+		// Incrémentation du tour
+		tour++
 	}
 
-	fmt.Println("╚══════════════════════════════════════════════╝")
-	fmt.Print("👉 Votre choix : ")
+	fmt.Println("🏁 Combat terminé !")
 }
