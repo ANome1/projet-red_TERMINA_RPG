@@ -186,7 +186,7 @@ func CountItem(perso *Personnage, item string) int {
 	return count
 }
 
-func InventaireCombat(perso *Personnage) {
+func InventaireCombat(perso *Personnage) bool {
 	for {
 		REDM.ClearTerminal()
 		fmt.Println("\n╔════════════════════════════════════════════╗")
@@ -213,12 +213,13 @@ func InventaireCombat(perso *Personnage) {
 				potChoix := REDM.LireChoix()
 				if potChoix == "1" {
 					TakePot(perso)
-					break // On revient au menu inventaire
+					return true
 				} else if potChoix == "2" {
 					PoisonPot(perso)
-					break
+					return true
+
 				} else if potChoix == "x" || potChoix == "X" {
-					break
+					return false
 				} else {
 					fmt.Println("❌ Choix invalide")
 					REDM.Pause(1)
@@ -235,7 +236,7 @@ func InventaireCombat(perso *Personnage) {
 
 				equipChoix := REDM.LireChoix()
 				if equipChoix == "x" || equipChoix == "X" {
-					break // Retour au menu inventaire
+					return false // Retour au menu inventaire
 				}
 
 				// Conversion en index
@@ -247,10 +248,11 @@ func InventaireCombat(perso *Personnage) {
 						Equiper(perso, equip)
 						fmt.Printf("✅ Vous avez équipé %s !\n", equip.Nom)
 						REDM.Pause(2)
-						break // On revient au menu inventaire après avoir équipé
+						return true
 					} else {
 						fmt.Println("❌ Vous ne possédez pas cet équipement")
 						REDM.Pause(2)
+						return false
 					}
 				} else {
 					fmt.Println("❌ Choix invalide")
@@ -259,7 +261,7 @@ func InventaireCombat(perso *Personnage) {
 			}
 
 		case "x", "X":
-			return // Retour au tour du joueur
+			return false
 
 		default:
 			fmt.Println("❌ Choix invalide")

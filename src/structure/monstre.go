@@ -75,17 +75,17 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 			DisplayInfo(*perso)
 			fmt.Println("\nAppuyez sur Entrée pour revenir au tour...")
 			fmt.Scanln()
-			// Ne consomme pas le tour, reste dans la boucle
-			continue
+			continue // reste dans la boucle, ne consomme pas le tour
 
 		case "2": // Attaquer
-			MenuAttaque(perso) // Affiche les sorts disponibles
+			REDM.ClearTerminal()
+			MenuAttaque(perso)
 			fmt.Print("👉 Choisissez un sort : ")
 			sortChoisi := REDM.LireChoix()
 			idx := -1
 			fmt.Sscan(sortChoisi, &idx)
 
-			var degats int = 5 // Tous les sorts font 5 dégâts pour l'instant
+			var degats int = 5
 			if idx >= 1 && idx <= len(perso.Skill) {
 				skill := perso.Skill[idx-1]
 				fmt.Printf("\n⚔️ %s utilise %s et inflige %d dégâts à %s !\n",
@@ -99,60 +99,21 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 				gobelin.PvActuels = 0
 			}
 			fmt.Printf("💖 PV restants de %s : %d/%d\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
-			return true // Action effectuée, fin du tour joueur
+			return true // tour consommé
 
 		case "3": // Inventaire
-			for {
-				fmt.Println("\n╔════════════════════════════════════════════╗")
-				fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
-				fmt.Println("╠════════════════════════════════════════════╣")
-				fmt.Println("║ [1] 🧪 Utiliser une potion                 ║")
-				fmt.Println("║ [2] 🛡️ Liste d'équipements                 ║")
-				fmt.Println("║ [X] 🔙 Retour au Menu de combat            ║")
-				fmt.Println("╚════════════════════════════════════════════╝")
-				fmt.Print("👉 Votre choix : ")
-				choixInv := REDM.LireChoix()
-
-				if choixInv == "1" {
-					InventairePotion(perso) // Affiche les potions
-					fmt.Print("👉 Choisissez la potion : ")
-					choixPot := REDM.LireChoix()
-					switch choixPot {
-					case "1":
-						TakePot(perso)
-						return true // action consommée
-					case "2":
-						PoisonPot(perso)
-						return true // action consommée
-					case "X", "x":
-						continue // reste dans inventaire
-					default:
-						fmt.Println("❌ Choix invalide.")
-					}
-				} else if choixInv == "2" {
-					fmt.Println("🛡️ Voir équipements en combat :")
-					InventaireEquipement(perso)
-					fmt.Println("[X] 🔙 Retour")
-					fmt.Print("👉 Choisissez l'équipement : ")
-					choixEquip := REDM.LireChoix()
-					if choixEquip == "X" || choixEquip == "x" {
-						continue // reste dans inventaire
-					}
-					// Gestion équipement si nécessaire
-					// Si tu veux équiper/déséquiper, ici tu peux implémenter
-					// Pour l'instant, on considère que regarder ne consomme pas le tour
-				} else if choixInv == "X" || choixInv == "x" {
-					break // Retour au menu principal
-				} else {
-					fmt.Println("❌ Choix invalide.")
-				}
+			REDM.ClearTerminal()
+			// On appelle ta fonction InventaireCombat
+			actionUtilisee := InventaireCombat(perso)
+			if actionUtilisee {
+				return true // si une potion a été utilisée, le tour est consommé
 			}
-			// Ne consomme pas le tour si on n'a rien utilisé
+			// sinon, continue la boucle (le joueur n’a rien fait)
 			continue
 
 		case "X", "x": // Fuir
 			fmt.Println("🏃‍♂️ Vous avez fui le combat !")
-			return false // pas d'action concrète mais on quitte le combat
+			return false
 
 		default:
 			fmt.Println("❌ Choix invalide.")
