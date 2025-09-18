@@ -268,11 +268,8 @@ func Menu(perso *RED.Personnage) {
 			Menu(perso)
 		}
 
-	case "A", "a": // Combat contre un gobelin
+	case "A", "a": // Combat contre un gobelin d'entrainement
 		REDM.ClearTerminal()
-		gobelin := RED.InitGobelin()
-		RED.MenuGobelin(&gobelin, perso)
-		//tour := 1
 
 	case "x", "X": // Quitter
 		REDM.ClearTerminal()

@@ -25,7 +25,7 @@ func InventaireLivres(perso *Personnage) {
 		qte := compteur[livre]
 		fmt.Printf("║ • %-36s x%-3d║\n", livre, qte)
 	}
-	fmt.Println("║ 🔙 Retour au Menu Principal [3]            ║")
+	fmt.Println("║ 🔙 Retour au Menu Principal [X]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }

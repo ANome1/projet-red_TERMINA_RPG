@@ -56,12 +56,58 @@ func GoblinPattern(gobelin *Monstre, perso *Personnage, tour int) {
 func CharacterTurn(perso *Personnage, gobelin *Monstre, tour *int) {
 	fmt.Println("\n╔═════════════════════════════════════════╗")
 	fmt.Println("║               VOTRE TOUR                 ║")
-	fmt.Println("╠══════════════════════════════════════════╣")
+	fmt.Println("╠═════════════════════════════════════════╣")
 	fmt.Println("║ [1] 📜 Menu                              ║")
 	fmt.Println("║ [2] ⚔️ Attaquer                          ║")
 	fmt.Println("║ [3] 🎒 Inventaire                        ║")
-	fmt.Println("╚══════════════════════════════════════════╝")
+	fmt.Println("║ [X] ❌ Fuir le combat                    ║")
+	fmt.Println("╚═════════════════════════════════════════╝")
 	fmt.Print("👉 Votre choix 😊 ")
+
+	choix := REDM.LireChoix()
+
+	switch choix {
+	case "1": // Menu principal
+		REDM.MenuEnCombat() // appelle ton menu général
+	case "2": // Attaquer
+		degats := 5
+		gobelin.PvActuels -= degats
+		if gobelin.PvActuels < 0 {
+			gobelin.PvActuels = 0
+		}
+		fmt.Printf("\n⚔️ %s utilise Attaque basique et inflige %d dégâts à %s !\n", perso.Nom, degats, gobelin.Nom)
+		fmt.Printf("💖 PV restants de %s : %d/%d\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
+
+		if gobelin.PvActuels <= 0 {
+			fmt.Println("🎉 Vous avez vaincu le gobelin !")
+			return
+		}
+
+		// Tour du gobelin
+		*tour++
+		GoblinPattern(gobelin, perso, *tour)
+
+	case "3": // Inventaire
+		InventaireCombat(perso)
+		choixInv := REDM.LireChoix()
+		switch choixInv {
+		case "1":
+			TakePot(perso)
+		case "2":
+			fmt.Println("🛡️ Voir équipements non implémenté pour le combat")
+		case "X", "x":
+			return
+		default:
+			fmt.Println("❌ Choix invalide.")
+		}
+
+	case "X", "x": // Fuir
+		fmt.Println("🏃‍♂️ Vous avez fui le combat !")
+		return
+
+	default:
+		fmt.Println("❌ Choix invalide.")
+	}
 }
 
 func MenuAttaque(perso *Personnage) {
