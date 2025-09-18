@@ -168,7 +168,6 @@ func TrainingFight(perso *Personnage) {
 		fmt.Println("\n--- Tour du Gobelin ---")
 		REDM.Pause(2)
 		GoblinPattern(&gobelin, perso, tour)
-		REDM.ClearTerminal()
 
 		// Vérifier si le joueur est mort
 		if perso.PvActuels <= 0 {
