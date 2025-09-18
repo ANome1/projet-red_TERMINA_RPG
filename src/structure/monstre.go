@@ -161,7 +161,6 @@ func TrainingFight(perso *Personnage) {
 
 			if perso.PvActuels <= 0 {
 				IsDead(perso)
-				//fmt.Println("💀 Vous avez été ressuscité avec 50% de vos PV max !")
 				REDM.Pause(2)
 			}
 			tour++
