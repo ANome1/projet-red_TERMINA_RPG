@@ -4,14 +4,22 @@ import (
 	REDM "RED/menu"
 	RED "RED/structure"
 	"fmt"
+	"time"
 )
 
 func main() {
+	REDM.ClearTerminal()
+	fmt.Println("\n╔═════════════════════════════════════════════════╗")
+	fmt.Println("║        🎮 BIENVENUE DANS TERMINA RPG            ║")
+	fmt.Println("╚═════════════════════════════════════════════════╝")
+	time.Sleep(3 * time.Second)
+	REDM.ClearTerminal()
 	perso := RED.CharacterCreation()
 	Menu(&perso)
 }
 
 func Menu(perso *RED.Personnage) {
+	REDM.ClearTerminal()
 	REDM.AfficherMenu()
 	choix := REDM.LireChoix()
 
@@ -20,7 +28,7 @@ func Menu(perso *RED.Personnage) {
 		REDM.ClearTerminal()
 		RED.DisplayInfo(*perso)
 		choix2 := REDM.LireChoix()
-		if choix2 == "1" {
+		if choix2 == "x" || choix2 == "X" {
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
@@ -51,34 +59,20 @@ func Menu(perso *RED.Personnage) {
 				REDM.ClearTerminal()
 				RED.PoisonPot(perso)
 				Menu(perso)
-			case "3":
+			case "x", "X":
 				REDM.ClearTerminal()
 				Menu(perso)
 			}
-		case "3":
+		case "3": // Livre de sorts
 			REDM.ClearTerminal()
-			RED.InventaireLivres(perso)
-			choix3 := REDM.LireChoix()
-			switch choix3 {
-			case "1":
-				REDM.ClearTerminal()
-				RED.SpellBookFeu(perso)
-				Menu(perso)
-			case "2":
-				REDM.ClearTerminal()
-				RED.SpellBookInv(perso)
-				RED.UpgradeInventory(perso)
-				Menu(perso)
-			case "3":
-				REDM.ClearTerminal()
-				Menu(perso)
-			}
+			RED.SpellBook(perso)
+			Menu(perso)
 		case "4": // Équipements
 			REDM.ClearTerminal()
 			RED.InventaireEquipement(perso)
 			fmt.Println("\n[1] 🛡️  Équiper un item")
 			fmt.Println("[2] ❌ Déséquiper un item")
-			fmt.Println("[3] 🔙 Retour au Menu Principal")
+			fmt.Println("[x] 🔙 Retour au Menu Principal")
 			choixEquip := REDM.LireChoix()
 
 			switch choixEquip {
@@ -132,9 +126,12 @@ func Menu(perso *RED.Personnage) {
 					fmt.Println("❌ Choix invalide")
 				}
 
-			case "3":
+			case "x", "X":
 				REDM.ClearTerminal()
 			}
+			Menu(perso)
+		case "x", "X":
+			REDM.ClearTerminal()
 			Menu(perso)
 		}
 
@@ -215,7 +212,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Println("❌ Vous n'avez pas assez d'or pour acheter cet objet")
 			}
 			Menu(perso)
-		case "9":
+		case "x", "X":
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
@@ -224,7 +221,7 @@ func Menu(perso *RED.Personnage) {
 		REDM.ClearTerminal()
 		RED.InfoSort(perso)
 		choix2 := REDM.LireChoix()
-		if choix2 == "1" {
+		if choix2 == "x" || choix2 == "X" {
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
@@ -252,12 +249,44 @@ func Menu(perso *RED.Personnage) {
 			REDM.ClearTerminal()
 			RED.Forger(perso, equip, materiaux)
 			Menu(perso)
-		case "4":
+		case "x", "X":
 			REDM.ClearTerminal()
 			Menu(perso)
 		}
+	case "A", "a": // Combat Gobelin
+		RED.MenuGobelin(perso)
+		REDM.Pause(2)
+		REDM.ClearTerminal()
+		gobelin := RED.InitGobelin()
+		tour := 1
 
-	case "X", "x": // Quitter
+		for gobelin.PvActuels > 0 && perso.PvActuels > 0 {
+			// Tour du joueur
+			RED.CharacterTurn(perso, &gobelin, &tour)
+
+			// Vérifier si le gobelin est mort
+			if gobelin.PvActuels <= 0 {
+				fmt.Println("\n╔════════════════════════════════════════════╗")
+				fmt.Println("║🎉 Vous avez vaincu le Gobelin d'entraînement !║")
+				fmt.Println("╚════════════════════════════════════════════╝")
+				break
+			}
+
+			// Vérifier si le joueur est mort
+			if perso.PvActuels <= 0 {
+				REDM.ClearTerminal()
+				fmt.Println("\n╔═════════════════════════════════════════════════╗")
+				fmt.Println("║💀 Vous avez été vaincu par le Gobelin...       ║")
+				fmt.Println("╚═════════════════════════════════════════════════╝")
+				RED.IsDead(perso)
+				break
+			}
+		}
+		fmt.Println("\n🔙 Retour automatique au menu principal...")
+		REDM.Pause(2)
+		Menu(perso)
+
+	case "x", "X": // Quitter
 		REDM.ClearTerminal()
 		fmt.Println("\n╔═════════════════════════════════════════════════╗")
 		fmt.Println("║       🎮 A bientôt ! Merci d'avoir joué !       ║")

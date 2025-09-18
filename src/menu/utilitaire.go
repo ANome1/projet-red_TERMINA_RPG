@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"time"
 )
 
 func ClearTerminal() {
@@ -17,4 +18,8 @@ func ClearTerminal() {
 		cmd.Stdout = os.Stdout
 		cmd.Run()
 	}
+}
+
+func Pause(seconde int) {
+	time.Sleep(time.Duration(seconde) * time.Second)
 }

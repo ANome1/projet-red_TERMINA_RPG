@@ -100,7 +100,7 @@ func AccessInventory(perso *Personnage) {
 			fmt.Printf("║ • %-38s   ║\n", item)
 		}
 	}
-	fmt.Println("║ 🔙 Retour au Menu Principal [1]            ║")
+	fmt.Println("║ 🔙 Retour au Menu Principal [X]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }
@@ -114,7 +114,7 @@ func InfoInventaire() {
 	fmt.Println("║ [2] 🧪 Utiliser une potion      ║")
 	fmt.Println("║ [3] 📚 Utiliser un livre de sort║")
 	fmt.Println("║ [4] 🛡️  Voir les équipements     ║")
-	fmt.Println("║ [5] 🔙 Retour au Menu Principal ║")
+	fmt.Println("║ [X] 🔙 Retour au Menu Principal ║")
 	fmt.Println("╚═════════════════════════════════╝")
 	fmt.Print("👉 Votre choix : ")
 }
@@ -181,4 +181,59 @@ func CountItem(perso *Personnage, item string) int {
 		}
 	}
 	return count
+}
+
+func InventaireCombat(perso *Personnage) {
+	for {
+		fmt.Println("\n╔════════════════════════════════════════════╗")
+		fmt.Println("║        🎒 INVENTAIRE EN COMBAT            ║")
+		fmt.Println("╠════════════════════════════════════════════╣")
+		fmt.Println("║ [1] 🧪 Consommer une potion                ║")
+		fmt.Println("║ [2] 🛡️  Gestion des équipements           ║")
+		fmt.Println("║ [X] 🔙 Retour au combat                     ║")
+		fmt.Println("╚════════════════════════════════════════════╝")
+		fmt.Print("👉 Votre choix : ")
+
+		var choix string
+		fmt.Scanln(&choix)
+
+		switch choix {
+		case "1":
+			// Afficher les potions disponibles
+			fmt.Println("\n╔════════════════════════════════════════════╗")
+			fmt.Println("║            🧪 POTIONS DISPONIBLES          ║")
+			fmt.Println("╠════════════════════════════════════════════╣")
+			potions := []string{"Potion de soin", "Potion de poison"}
+			for i, potion := range potions {
+				count := CountItem(perso, potion)
+				fmt.Printf("║ [%d] %-30s x%-3d ║\n", i+1, potion, count)
+			}
+			fmt.Println("║ 🔙 Retour [X]                               ║")
+			fmt.Println("╚════════════════════════════════════════════╝")
+			fmt.Print("👉 Votre choix : ")
+
+			var potionChoix string
+			fmt.Scanln(&potionChoix)
+			switch potionChoix {
+			case "1":
+				TakePot(perso)
+			case "2":
+				PoisonPot(perso)
+			case "X", "x":
+				continue
+			default:
+				fmt.Println("❌ Choix invalide.")
+			}
+
+		case "2":
+			// Accéder directement au menu d'équipements
+			InventaireEquipement(perso)
+
+		case "X", "x":
+			return
+
+		default:
+			fmt.Println("❌ Choix invalide, veuillez réessayer.")
+		}
+	}
 }
