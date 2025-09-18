@@ -1,6 +1,9 @@
 package RED
 
-import "fmt"
+import (
+	REDM "RED/menu"
+	"fmt"
+)
 
 type Inventaire struct {
 	Items      []string
@@ -184,12 +187,83 @@ func CountItem(perso *Personnage, item string) int {
 }
 
 func InventaireCombat(perso *Personnage) {
-	fmt.Println("\n╔════════════════════════════════════════════╗")
-	fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
-	fmt.Println("╠════════════════════════════════════════════╣")
-	fmt.Println("║ [1] 🧪 Utiliser une potion                 ║")
-	fmt.Println("║ [2] 🛡️ Liste d'equipements                 ║")
-	fmt.Println("║ [X] 🔙 Retour au Menu de combat            ║")
-	fmt.Println("╚════════════════════════════════════════════╝")
-	fmt.Print("👉 Votre choix : ")
+	for {
+		REDM.ClearTerminal()
+		fmt.Println("\n╔════════════════════════════════════════════╗")
+		fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
+		fmt.Println("╠════════════════════════════════════════════╣")
+		fmt.Println("║ [1] 🧪 Utiliser une potion                 ║")
+		fmt.Println("║ [2] 🛡️ Voir équipements                   ║")
+		fmt.Println("║ [X] 🔙 Retour au Menu de combat            ║")
+		fmt.Println("╚════════════════════════════════════════════╝")
+		fmt.Print("👉 Votre choix : ")
+
+		choix := REDM.LireChoix()
+
+		switch choix {
+		case "1": // Potions
+			for {
+				REDM.ClearTerminal()
+				fmt.Println("\n🎒 Choisissez une potion :")
+				fmt.Println("[1] Potion de soin")
+				fmt.Println("[2] Potion de poison")
+				fmt.Println("[X] 🔙 Retour")
+				fmt.Print("👉 Votre choix : ")
+
+				potChoix := REDM.LireChoix()
+				if potChoix == "1" {
+					TakePot(perso)
+					break // On revient au menu inventaire
+				} else if potChoix == "2" {
+					PoisonPot(perso)
+					break
+				} else if potChoix == "x" || potChoix == "X" {
+					break
+				} else {
+					fmt.Println("❌ Choix invalide")
+					REDM.Pause(1)
+				}
+			}
+
+		case "2": // Équipements
+			for {
+				REDM.ClearTerminal()
+				fmt.Println("🛡️ Voir équipements en combat :")
+				InventaireEquipement(perso) // Affiche les équipements disponibles
+				fmt.Println("[X] 🔙 Retour")
+				fmt.Print("👉 Choisissez l'équipement à équiper : ")
+
+				equipChoix := REDM.LireChoix()
+				if equipChoix == "x" || equipChoix == "X" {
+					break // Retour au menu inventaire
+				}
+
+				// Conversion en index
+				idx := -1
+				fmt.Sscan(equipChoix, &idx)
+				if idx >= 1 && idx <= len(Equipements) {
+					equip := Equipements[idx-1]
+					if HasItem(perso, equip.Nom) {
+						Equiper(perso, equip)
+						fmt.Printf("✅ Vous avez équipé %s !\n", equip.Nom)
+						REDM.Pause(2)
+						break // On revient au menu inventaire après avoir équipé
+					} else {
+						fmt.Println("❌ Vous ne possédez pas cet équipement")
+						REDM.Pause(2)
+					}
+				} else {
+					fmt.Println("❌ Choix invalide")
+					REDM.Pause(1)
+				}
+			}
+
+		case "x", "X":
+			return // Retour au tour du joueur
+
+		default:
+			fmt.Println("❌ Choix invalide")
+			REDM.Pause(1)
+		}
+	}
 }

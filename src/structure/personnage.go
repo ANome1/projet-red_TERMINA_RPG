@@ -2,6 +2,7 @@ package RED
 
 import (
 	RED "RED/menu"
+	REDM "RED/menu"
 	"bufio"
 	"fmt"
 	"os"
@@ -224,10 +225,14 @@ func InfoSort(perso *Personnage) {
 	fmt.Println("👉 Votre choix :")
 }
 
-func IsDead(perso *Personnage) {
+func IsDead(perso *Personnage) bool {
 	if perso.PvActuels <= 0 {
-		fmt.Println("💀", perso.Nom, "est mort...")
+		fmt.Println("\n💀 Vous êtes mort...")
+		REDM.Pause(2)
 		perso.PvActuels = perso.PvMax / 2
-		fmt.Println("✨", perso.Nom, "a été ressuscité avec", perso.PvActuels, "PV.")
+		fmt.Printf("✨ Mais vous ressuscitez avec %d PV !\n", perso.PvActuels)
+		REDM.Pause(2)
+		return true // indique que le joueur est mort et ressuscité
 	}
+	return false
 }
