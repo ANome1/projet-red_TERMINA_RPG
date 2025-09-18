@@ -3,7 +3,6 @@ package RED
 import (
 	REDM "RED/menu"
 	"fmt"
-	"math/rand"
 )
 
 type Equipement struct {
@@ -172,7 +171,7 @@ func Forger(perso *Personnage, equip Equipement, materiaux map[string]int) {
 	fmt.Println("\n╔══════════════════════════════════════════════════╗")
 	fmt.Println("║ Le forgeron travaille, veuillez patienter...  ⚒️  ║")
 	fmt.Println("╚══════════════════════════════════════════════════╝")
-	REDM.Pause(rand.Intn(5)) // Pause entre 2 et 4 secondes
+	REDM.Pause(5)
 	REDM.ClearTerminal()
 
 	// Ajouter l’équipement à l'inventaire (mais pas équipé)

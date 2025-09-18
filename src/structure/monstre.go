@@ -1,6 +1,7 @@
 package RED
 
 import (
+	RED "RED/menu"
 	REDM "RED/menu"
 	"fmt"
 )
@@ -29,7 +30,7 @@ func MenuAttaque(perso *Personnage) {
 	fmt.Println("║                ⚔️  ATTAQUE                    ║")
 	fmt.Println("╠══════════════════════════════════════════════╣")
 	for i, skill := range perso.Skill {
-		fmt.Printf("║ [%d] %s\n", i+1, skill)
+		fmt.Printf("║ [%d] %s                            ║\n", i+1, skill)
 	}
 	fmt.Println("╚══════════════════════════════════════════════╝")
 	fmt.Print("👉 Choisissez un sort : ")
@@ -50,6 +51,7 @@ func GoblinPattern(gobelin *Monstre, perso *Personnage, tour int) {
 		perso.PvActuels = 0
 	}
 
+	RED.Pause(2)
 	fmt.Printf("⚔️ %s inflige à %s %d points de dégâts !\n", gobelin.Nom, perso.Nom, degats)
 	fmt.Printf("💖 PV actuels : %d/%d\n", perso.PvActuels, perso.PvMax)
 }
@@ -59,12 +61,12 @@ func GoblinPattern(gobelin *Monstre, perso *Personnage, tour int) {
 func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 	for {
 		fmt.Println("\n╔═════════════════════════════════════════╗")
-		fmt.Println("║               VOTRE TOUR                 ║")
+		fmt.Println("║               VOTRE TOUR                ║")
 		fmt.Println("╠═════════════════════════════════════════╣")
-		fmt.Println("║ [1] 📜 Infos du personnage               ║")
+		fmt.Println("║ [1] 📜 Infos du personnage              ║")
 		fmt.Println("║ [2] ⚔️ Attaquer                          ║")
-		fmt.Println("║ [3] 🎒 Inventaire                        ║")
-		fmt.Println("║ [X] ❌ Fuir le combat                    ║")
+		fmt.Println("║ [3] 🎒 Inventaire                       ║")
+		fmt.Println("║ [X] ❌ Fuir le combat                   ║")
 		fmt.Println("╚═════════════════════════════════════════╝")
 		fmt.Print("👉 Votre choix : ")
 
@@ -80,7 +82,6 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 		case "2": // Attaquer
 			REDM.ClearTerminal()
 			MenuAttaque(perso)
-			fmt.Print("👉 Choisissez un sort : ")
 			sortChoisi := REDM.LireChoix()
 			idx := -1
 			fmt.Sscan(sortChoisi, &idx)
@@ -112,7 +113,7 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 			continue
 
 		case "X", "x": // Fuir
-			fmt.Println("🏃‍♂️ Vous avez fui le combat !")
+			fmt.Println("🏃‍♂️ Vous avez essayé de fuir le combat MAIS LE GOBELIN VOUS RATTRAPE !")
 			return false
 
 		default:
@@ -129,15 +130,22 @@ func TrainingFight(perso *Personnage) {
 	for gobelin.PvActuels > 0 && perso.PvActuels > 0 {
 		REDM.ClearTerminal()
 		fmt.Println("\n╔══════════════════════════════════════════════╗")
-		fmt.Printf("║                 TOUR %d                        ║\n", tour)
+		fmt.Printf("║                   TOUR %d                     ║\n", tour)
 		fmt.Println("╚══════════════════════════════════════════════╝")
-		fmt.Printf("\n💖 Vos PV : %d/%d\n", perso.PvActuels, perso.PvMax)
-		fmt.Printf("💖 PV du %s : %d/%d\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
+		fmt.Println("\n╔══════════════════════════════════════════════╗")
+		fmt.Printf("║                     PV                       ║\n")
+		fmt.Println("╠══════════════════════════════════════════════╣")
+		fmt.Printf("║💖 Vos PV : %d/%d                            ║\n", perso.PvActuels, perso.PvMax)
+		fmt.Printf("║💖 PV du %s : %d/%d       ║\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
+		fmt.Println("╚══════════════════════════════════════════════╝")
 
 		actionEffectuee := CharacterTurn(perso, &gobelin)
 
 		if gobelin.PvActuels <= 0 {
 			fmt.Println("🎉 Vous avez vaincu le gobelin !")
+			REDM.Pause(2)
+			fmt.Println("💰 Votre victoire vous a rapporté : 10 PO")
+			perso.Gold += 10
 			REDM.Pause(2)
 			break
 		}
@@ -148,7 +156,7 @@ func TrainingFight(perso *Personnage) {
 
 			if perso.PvActuels <= 0 {
 				IsDead(perso)
-				fmt.Println("💀 Vous avez été ressuscité avec 50% de vos PV max !")
+				//fmt.Println("💀 Vous avez été ressuscité avec 50% de vos PV max !")
 				REDM.Pause(2)
 			}
 			tour++

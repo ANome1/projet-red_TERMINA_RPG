@@ -82,7 +82,7 @@ func InventairePotion(perso *Personnage) {
 		qte := compteur[potion]
 		fmt.Printf("║ • %-28s x%-3d        ║\n", potion, qte)
 	}
-	fmt.Println("║ 🔙 Retour au Menu Principal [3]            ║")
+	fmt.Println("║ 🔙 Retour au Menu Principal [X]            ║")
 	fmt.Println("╚════════════════════════════════════════════╝")
 	fmt.Println("👉 Votre choix :")
 }
@@ -193,7 +193,7 @@ func InventaireCombat(perso *Personnage) bool {
 		fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
 		fmt.Println("╠════════════════════════════════════════════╣")
 		fmt.Println("║ [1] 🧪 Utiliser une potion                 ║")
-		fmt.Println("║ [2] 🛡️ Voir équipements                   ║")
+		fmt.Println("║ [2] 🛡️  Voir équipements                    ║")
 		fmt.Println("║ [X] 🔙 Retour au Menu de combat            ║")
 		fmt.Println("╚════════════════════════════════════════════╝")
 		fmt.Print("👉 Votre choix : ")

@@ -227,10 +227,10 @@ func InfoSort(perso *Personnage) {
 
 func IsDead(perso *Personnage) bool {
 	if perso.PvActuels <= 0 {
-		fmt.Println("\n💀 Vous êtes mort...")
-		REDM.Pause(2)
+		fmt.Println("\n💀 Vous êtes mort, vous allez réapparaitre dans 5 secondes...")
+		REDM.Pause(5)
 		perso.PvActuels = perso.PvMax / 2
-		fmt.Printf("✨ Mais vous ressuscitez avec %d PV !\n", perso.PvActuels)
+		fmt.Printf("✨ Vous ressuscitez avec %d PV !\n", perso.PvActuels)
 		REDM.Pause(2)
 		return true // indique que le joueur est mort et ressuscité
 	}

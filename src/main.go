@@ -77,7 +77,7 @@ func Menu(perso *RED.Personnage) {
 				RED.SpellBookInv(perso)
 				RED.UpgradeInventory(perso)
 				Menu(perso)
-			case "3":
+			case "X", "x":
 				REDM.ClearTerminal()
 				Menu(perso)
 			}
