@@ -166,3 +166,22 @@ func Forger(perso *Personnage, equip Equipement, materiaux map[string]int) {
 	fmt.Println("✅ Le forgeron a forgé :", equip.Nom, "→ ajouté à votre inventaire")
 	fmt.Println("💰 5 Po ont été dépensés pour le crafting")
 }
+
+func HasItem(perso *Personnage, item string) bool {
+	for _, i := range perso.Inventaire.Items {
+		if i == item {
+			return true
+		}
+	}
+	return false
+}
+
+func CountItem(perso *Personnage, item string) int {
+	count := 0
+	for _, i := range perso.Inventaire.Items {
+		if i == item {
+			count++
+		}
+	}
+	return count
+}

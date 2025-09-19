@@ -159,25 +159,6 @@ func UpgradeInventory(perso *Personnage) {
 	}
 }
 
-func HasItem(perso *Personnage, item string) bool {
-	for _, i := range perso.Inventaire.Items {
-		if i == item {
-			return true
-		}
-	}
-	return false
-}
-
-func CountItem(perso *Personnage, item string) int {
-	count := 0
-	for _, i := range perso.Inventaire.Items {
-		if i == item {
-			count++
-		}
-	}
-	return count
-}
-
 func InventaireCombat(perso *Personnage) bool {
 	for {
 		REDM.ClearTerminal()
