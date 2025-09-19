@@ -101,7 +101,7 @@ func PoisonPot(perso *Personnage) {
 	}
 	fmt.Println("╚═════════════════════════════════════════════════╝")
 	if perso.PvActuels == 0 {
-		fmt.Println("Ne cherzhez pas la facité en mettant fin à vos jour !")
+		fmt.Println("Ne cherchez pas la facilité en mettant fin à vos jours !")
 		IsDead(perso)
 	}
 }
