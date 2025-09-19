@@ -68,7 +68,6 @@ func InventaireEquipement(perso *Personnage) {
 	fmt.Println("👉 Votre choix :")
 }
 
-// Affiche les potions disponibles avec la quantité
 func InventairePotion(perso *Personnage) {
 	potionsDisponibles := []string{"Potion de soin", "Potion de poison"}
 	compteur := make(map[string]int)
@@ -87,7 +86,6 @@ func InventairePotion(perso *Personnage) {
 	fmt.Println("👉 Votre choix :")
 }
 
-// Affiche tout l’inventaire
 func AccessInventory(perso *Personnage) {
 	fmt.Println("\n╔════════════════════════════════════════════╗")
 	fmt.Println("║           🎒 INVENTAIRE DU JOUEUR          ║")
@@ -108,7 +106,6 @@ func AccessInventory(perso *Personnage) {
 	fmt.Println("👉 Votre choix :")
 }
 
-// Menu inventaire principal
 func InfoInventaire() {
 	fmt.Println("\n╔═════════════════════════════════╗")
 	fmt.Println("║     INFORMATIONS INVENTAIRE     ║")
@@ -122,7 +119,6 @@ func InfoInventaire() {
 	fmt.Print("👉 Votre choix : ")
 }
 
-// Ajout d’un item
 func AddInventory(perso *Personnage, item string) {
 	if !InventairePlein(perso) {
 		perso.Inventaire.Items = append(perso.Inventaire.Items, item)
@@ -132,7 +128,6 @@ func AddInventory(perso *Personnage, item string) {
 	}
 }
 
-// Retirer un item
 func RemoveInventory(perso *Personnage, item string) {
 	for i, v := range perso.Inventaire.Items {
 		if v == item {
@@ -150,7 +145,6 @@ func RemoveInventory(perso *Personnage, item string) {
 	fmt.Println(item, "n'a pas été trouvé dans l'inventaire.")
 }
 
-// Vérifie si l’inventaire est plein
 func InventairePlein(perso *Personnage) bool {
 	return len(perso.Inventaire.Items) >= perso.Inventaire.Max
 }
@@ -165,7 +159,6 @@ func UpgradeInventory(perso *Personnage) {
 	}
 }
 
-// Vérifie si le personnage possède un item
 func HasItem(perso *Personnage, item string) bool {
 	for _, i := range perso.Inventaire.Items {
 		if i == item {
@@ -175,7 +168,6 @@ func HasItem(perso *Personnage, item string) bool {
 	return false
 }
 
-// Compte le nombre d’items identiques
 func CountItem(perso *Personnage, item string) int {
 	count := 0
 	for _, i := range perso.Inventaire.Items {
@@ -201,7 +193,7 @@ func InventaireCombat(perso *Personnage) bool {
 		choix := REDM.LireChoix()
 
 		switch choix {
-		case "1": // Potions
+		case "1":
 			for {
 				REDM.ClearTerminal()
 				fmt.Println("\n╔════════════════════════════════════════════╗")
@@ -229,19 +221,17 @@ func InventaireCombat(perso *Personnage) bool {
 				}
 			}
 
-		case "2": // Équipements
+		case "2":
 			for {
 				REDM.ClearTerminal()
 				fmt.Println("🛡️  Voir équipements en combat :")
-				InventaireEquipement(perso) // Affiche les équipements disponibles
+				InventaireEquipement(perso)
 				fmt.Println("[X] 🔙 Retour")
 
 				equipChoix := REDM.LireChoix()
 				if equipChoix == "x" || equipChoix == "X" {
-					return false // Retour au menu inventaire
+					return false
 				}
-
-				// Conversion en index
 				idx := -1
 				fmt.Sscan(equipChoix, &idx)
 				if idx >= 1 && idx <= len(Equipements) {

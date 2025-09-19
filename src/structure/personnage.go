@@ -140,11 +140,9 @@ func SpellBookFeu(perso *Personnage) {
 		}
 	}
 
-	// Apprendre le sort
 	perso.Skill = append(perso.Skill, sort)
 	fmt.Println("🔥 Vous avez appris le sort :", sort)
 
-	// Retirer le livre de l'inventaire après utilisation
 	nouvelInventaire := []string{}
 	for _, item := range perso.Inventaire.Items {
 		if item != "Livre de Sort : Boule de Feu" {
@@ -232,7 +230,7 @@ func IsDead(perso *Personnage) bool {
 		perso.PvActuels = perso.PvMax / 2
 		fmt.Printf("✨ Vous ressuscitez avec %d PV !\n", perso.PvActuels)
 		REDM.Pause(2)
-		return true // indique que le joueur est mort et ressuscité
+		return true
 	}
 	return false
 }

@@ -6,7 +6,6 @@ import (
 	"fmt"
 )
 
-// Structure du monstre
 type Monstre struct {
 	Nom       string
 	PvMax     int
@@ -14,7 +13,6 @@ type Monstre struct {
 	Attaque   int
 }
 
-// Initialisation d'un Gobelin d'entraînement
 func InitGobelin() Monstre {
 	return Monstre{
 		Nom:       "Gobelin d'entraînement",
@@ -24,7 +22,6 @@ func InitGobelin() Monstre {
 	}
 }
 
-// Menu des sorts
 func MenuAttaque(perso *Personnage) {
 	fmt.Println("\n╔══════════════════════════════════════════════╗")
 	fmt.Println("║                ⚔️  ATTAQUE                    ║")
@@ -36,7 +33,6 @@ func MenuAttaque(perso *Personnage) {
 	fmt.Print("👉 Choisissez un sort : ")
 }
 
-// Pattern d'attaque du Gobelin
 func GoblinPattern(gobelin *Monstre, perso *Personnage, tour int) {
 	var degats int
 	if tour%3 == 0 {
@@ -56,8 +52,6 @@ func GoblinPattern(gobelin *Monstre, perso *Personnage, tour int) {
 	fmt.Printf("💖 PV actuels : %d/%d\n", perso.PvActuels, perso.PvMax)
 }
 
-// Tour du joueur
-// Retourne true si une action concrète a été effectuée
 func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 	for {
 		fmt.Println("\n╔═════════════════════════════════════════╗")
@@ -72,14 +66,14 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 
 		choix := REDM.LireChoix()
 		switch choix {
-		case "1": // Afficher infos joueur
+		case "1":
 			REDM.ClearTerminal()
 			DisplayInfo(*perso)
 			fmt.Println("\nAppuyez sur Entrée pour revenir au tour...")
 			fmt.Scanln()
-			continue // reste dans la boucle, ne consomme pas le tour
+			continue
 
-		case "2": // Attaquer
+		case "2":
 			REDM.ClearTerminal()
 			MenuAttaque(perso)
 			sortChoisi := REDM.LireChoix()
@@ -100,19 +94,17 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 				gobelin.PvActuels = 0
 			}
 			fmt.Printf("💖 PV restants de %s : %d/%d\n", gobelin.Nom, gobelin.PvActuels, gobelin.PvMax)
-			return true // tour consommé
+			return true
 
-		case "3": // Inventaire
+		case "3":
 			REDM.ClearTerminal()
-			// On appelle ta fonction InventaireCombat
 			actionUtilisee := InventaireCombat(perso)
 			if actionUtilisee {
-				return true // si une potion a été utilisée, le tour est consommé
+				return true
 			}
-			// sinon, continue la boucle (le joueur n’a rien fait)
 			continue
 
-		case "X", "x": // Fuir
+		case "X", "x":
 			fmt.Println("💨 Vous avez essayé de fuir le combat MAIS...")
 			RED.Pause(2)
 			fmt.Println("👹 LE GOBELIN VOUS RATTRAPE !")
@@ -127,7 +119,6 @@ func CharacterTurn(perso *Personnage, gobelin *Monstre) bool {
 	}
 }
 
-// Combat d'entraînement
 func TrainingFight(perso *Personnage) {
 	gobelin := InitGobelin()
 	tour := 1
@@ -156,7 +147,6 @@ func TrainingFight(perso *Personnage) {
 		}
 
 		if actionEffectuee {
-			// Tour du gobelin seulement si le joueur a agi
 			GoblinPattern(&gobelin, perso, tour)
 
 			if perso.PvActuels <= 0 {

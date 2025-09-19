@@ -90,8 +90,8 @@ func Menu(perso *RED.Personnage) {
 			choixEquip := REDM.LireChoix()
 
 			switch choixEquip {
-			case "1": // Équiper
-				REDM.ClearTerminal() // Nettoie avant d’afficher les équipements disponibles
+			case "1":
+				REDM.ClearTerminal()
 				fmt.Println("\nÉquipements disponibles à équiper :")
 				for i, equip := range RED.Equipements {
 					if RED.HasItem(perso, equip.Nom) {
@@ -101,7 +101,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Print("Choisissez le numéro de l’équipement : ")
 				num := REDM.LireChoix()
 
-				REDM.ClearTerminal() // Nettoie avant d’afficher le résultat
+				REDM.ClearTerminal()
 				for i, equip := range RED.Equipements {
 					if fmt.Sprint(i+1) == num {
 						if RED.HasItem(perso, equip.Nom) {
@@ -114,7 +114,7 @@ func Menu(perso *RED.Personnage) {
 				}
 
 			case "2": // Déséquiper
-				REDM.ClearTerminal() // Nettoie avant d’afficher les équipements équipés
+				REDM.ClearTerminal()
 				fmt.Println("\nÉquipements équipés :")
 				if perso.Equipement.Tete != nil {
 					fmt.Println("[1] Tête :", perso.Equipement.Tete.Nom)
@@ -128,7 +128,7 @@ func Menu(perso *RED.Personnage) {
 				fmt.Print("Choisissez le numéro de la catégorie à déséquiper : ")
 				num := REDM.LireChoix()
 
-				REDM.ClearTerminal() // Nettoie avant d’afficher le résultat
+				REDM.ClearTerminal()
 				switch num {
 				case "1":
 					RED.Desequiper(perso, "Tête")
@@ -270,8 +270,8 @@ func Menu(perso *RED.Personnage) {
 
 	case "A", "a": // Combat contre un gobelin d'entrainement
 		REDM.ClearTerminal()
-		RED.TrainingFight(perso) // Lancement du combat
-		Menu(perso)              // Retour au menu principal après le combat
+		RED.TrainingFight(perso)
+		Menu(perso)
 
 	case "x", "X": // Quitter
 		REDM.ClearTerminal()
